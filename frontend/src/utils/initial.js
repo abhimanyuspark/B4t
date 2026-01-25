@@ -3,7 +3,6 @@ import { FaAirbnb, FaHome, FaShoppingBag, FaUsers } from "react-icons/fa";
 export const languages = [
   { code: "en", name: "English" },
   { code: "hi", name: "Hindi" },
-  { code: "es", name: "Spanish" },
 ];
 
 export const footerNavigation = [

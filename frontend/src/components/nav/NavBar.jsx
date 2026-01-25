@@ -6,6 +6,7 @@ import { toast } from "react-hot-toast";
 import Select from "../common/Select";
 import { languages } from "../../utils/initial";
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 
 const NavBar = () => {
   return (
@@ -17,6 +18,7 @@ const NavBar = () => {
 
 const NavContent = () => {
   const { user, isAuthenticated } = useSelector((state) => state.auth);
+  const { t } = useTranslation();
 
   return (
     <div className="flex items-center justify-between">
@@ -25,7 +27,7 @@ const NavContent = () => {
       </div>
       <div>
         {isAuthenticated ? (
-          <ul className="flex space-x-4">
+          <ul className="flex space-x-4 items-center">
             <li>
               <LogoutButton />
             </li>
@@ -37,12 +39,12 @@ const NavContent = () => {
           <ul className="flex space-x-4">
             <li>
               <Link to="/login" className="link-gray-btn">
-                Login
+                {t("login")}
               </Link>
             </li>
             <li>
               <Link to="/register" className="link-gray-btn">
-                Register
+                {t("register")}
               </Link>
             </li>
           </ul>
@@ -54,9 +56,11 @@ const NavContent = () => {
 
 const LanguageSelect = () => {
   const [option, setOption] = useState(languages[0]);
+  const { i18n } = useTranslation();
 
   const handleLanguageChange = (selectedOption) => {
     setOption(selectedOption);
+    i18n.changeLanguage(selectedOption?.code);
   };
 
   return (
@@ -64,6 +68,7 @@ const LanguageSelect = () => {
       text={(opt) => opt?.name}
       options={languages}
       value={option}
+      className="w-30"
       onChange={handleLanguageChange}
     />
   );
@@ -72,6 +77,7 @@ const LanguageSelect = () => {
 const LogoutButton = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const onLogout = async () => {
     await toast.promise(dispatch(logout()).unwrap(), {
@@ -86,7 +92,7 @@ const LogoutButton = () => {
 
   return (
     <button className="link-gray-btn" onClick={onLogout}>
-      <FaSignOutAlt /> Logout
+      <FaSignOutAlt /> {t("logout")}
     </button>
   );
 };

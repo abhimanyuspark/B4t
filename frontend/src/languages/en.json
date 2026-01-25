@@ -1,0 +1,10 @@
+{
+    "welcome_message": "Welcome to our application!",
+    "login": "Log In",
+    "register": "Register",
+    "logout": "Log Out",
+    "profile": "Profile",
+    "settings": "Settings",
+    "error_404": "Page Not Found",
+    "loading": "Loading..."
+}
