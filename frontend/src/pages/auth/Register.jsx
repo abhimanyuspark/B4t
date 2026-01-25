@@ -4,12 +4,12 @@ import Input from "../../components/common/Input";
 import validation from "../../utils/validation";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
-import { loginUser } from "../../redux/features/authSlice";
+import { registerUser } from "../../redux/features/authSlice";
 import PassInput from "../../components/common/PassInput";
 import { toast } from "react-hot-toast";
 
-const Login = () => {
-  const [form, setForm] = useState({ email: "", password: "" });
+const Register = () => {
+  const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
   const { loading, error } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
@@ -28,11 +28,11 @@ const Login = () => {
       return;
     }
 
-    toast.promise(dispatch(loginUser(form)).unwrap(), {
+    await toast.promise(dispatch(registerUser(form)).unwrap(), {
       loading: "Loading...",
       success: () => {
         navigate("/", { replace: true });
-        return "Login successful";
+        return "Registration successful";
       },
       error: (err) => err,
     });
@@ -41,16 +41,23 @@ const Login = () => {
   return (
     <div className="flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+
         {error && (
           <p className="text-red-500 text-center font-medium mb-4">{error}</p>
         )}
-
         <form
           className="flex gap-2 flex-col"
           onSubmit={handleSubmit}
           noValidate
         >
+          <Input
+            type="name"
+            name="name"
+            value={form.name}
+            onChange={handleChange}
+            error={errors.name}
+          />
           <Input
             type="email"
             name="email"
@@ -73,7 +80,7 @@ const Login = () => {
           <br />
 
           <Button type="submit" loading={loading} disabled={loading}>
-            Login
+            Register
           </Button>
         </form>
       </div>
@@ -81,4 +88,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;

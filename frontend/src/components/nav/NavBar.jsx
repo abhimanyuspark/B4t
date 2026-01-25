@@ -1,6 +1,11 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router";
+import { FaSignOutAlt } from "react-icons/fa";
+import { logout } from "../../redux/features/authSlice";
+import { toast } from "react-hot-toast";
+import Select from "../common/Select";
+import { languages } from "../../utils/initial";
+import { useState } from "react";
 
 const NavBar = () => {
   return (
@@ -22,32 +27,67 @@ const NavContent = () => {
         {isAuthenticated ? (
           <ul className="flex space-x-4">
             <li>
-              <a href="/" className="text-gray-800 hover:text-gray-600">
-                Home
-              </a>
+              <LogoutButton />
             </li>
             <li>
-              <a href="/about" className="text-gray-800 hover:text-gray-600">
-                About
-              </a>
-            </li>
-            <li>
-              <a href="/contact" className="text-gray-800 hover:text-gray-600">
-                Contact
-              </a>
+              <LanguageSelect />
             </li>
           </ul>
         ) : (
           <ul className="flex space-x-4">
             <li>
-              <Link to="/login" className="text-gray-800 hover:text-gray-600">
+              <Link to="/login" className="link-gray-btn">
                 Login
+              </Link>
+            </li>
+            <li>
+              <Link to="/register" className="link-gray-btn">
+                Register
               </Link>
             </li>
           </ul>
         )}
       </div>
     </div>
+  );
+};
+
+const LanguageSelect = () => {
+  const [option, setOption] = useState(languages[0]);
+
+  const handleLanguageChange = (selectedOption) => {
+    setOption(selectedOption);
+  };
+
+  return (
+    <Select
+      text={(opt) => opt?.name}
+      options={languages}
+      value={option}
+      onChange={handleLanguageChange}
+    />
+  );
+};
+
+const LogoutButton = () => {
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const onLogout = async () => {
+    await toast.promise(dispatch(logout()).unwrap(), {
+      loading: "Logging out...",
+      success: () => {
+        navigate("/login");
+        return "Logged out successfully!";
+      },
+      error: (err) => `Logout failed: ${err}`,
+    });
+  };
+
+  return (
+    <button className="link-gray-btn" onClick={onLogout}>
+      <FaSignOutAlt /> Logout
+    </button>
   );
 };
 
