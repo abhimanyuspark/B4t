@@ -6,13 +6,16 @@ import { BrowserRouter } from "react-router";
 import { Provider } from "react-redux";
 import store from "./redux/store.js";
 import "./utils/i18n.js";
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 createRoot(document.getElementById("root")).render(
   // <StrictMode>
-  <BrowserRouter>
-    <Provider store={store}>
-      <App />
-    </Provider>
-  </BrowserRouter>,
+  <Provider store={store}>
+    <BrowserRouter>
+      <GoogleOAuthProvider clientId={import.meta.env.VITE_GOOGLE_CLIENT_ID}>
+        <App />
+      </GoogleOAuthProvider>
+    </BrowserRouter>
+  </Provider>,
   // </StrictMode>,
 );

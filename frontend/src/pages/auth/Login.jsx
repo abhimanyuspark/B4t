@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { loginUser } from "../../redux/features/authSlice";
 import PassInput from "../../components/common/PassInput";
 import { toast } from "react-hot-toast";
+import GoogleAuthButton from "../../components/@comp/GoogleAuthButton";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
@@ -28,23 +29,26 @@ const Login = () => {
       return;
     }
 
-    toast.promise(dispatch(loginUser(form)).unwrap(), {
-      loading: "Loading...",
-      success: () => {
-        navigate("/", { replace: true });
-        return "Login successful";
+    toast.promise(
+      dispatch(loginUser(form)).unwrap(),
+      {
+        loading: "Loading...",
+        success: () => {
+          navigate("/", { replace: true });
+          return "Login successful";
+        },
+        error: (err) => err,
       },
-      error: (err) => err,
-    });
+      {
+        position: "top-center",
+      },
+    );
   };
 
   return (
     <div className="flex items-center justify-center bg-gray-100">
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
-        {error && (
-          <p className="text-red-500 text-center font-medium mb-4">{error}</p>
-        )}
 
         <form
           className="flex gap-2 flex-col"
@@ -71,6 +75,8 @@ const Login = () => {
             <hr className="flex-1 border border-gray-200" />
           </div>
           <br />
+
+          <GoogleAuthButton />
 
           <Button type="submit" loading={loading} disabled={loading}>
             Login

@@ -55,12 +55,15 @@ const NavContent = () => {
 };
 
 const LanguageSelect = () => {
-  const [option, setOption] = useState(languages[0]);
+  const lang = localStorage.getItem("lang");
+  const int = languages.find((l) => lang && lang === l.code && l);
+  const [option, setOption] = useState(int || languages[0]);
   const { i18n } = useTranslation();
 
   const handleLanguageChange = (selectedOption) => {
     setOption(selectedOption);
     i18n.changeLanguage(selectedOption?.code);
+    localStorage.setItem("lang", selectedOption?.code);
   };
 
   return (

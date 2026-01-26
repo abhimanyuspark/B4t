@@ -6,10 +6,13 @@ import NavBar from "./components/nav/NavBar";
 import UserLayout from "./components/layout/UserLayout";
 import { Toaster } from "react-hot-toast";
 import Footer from "./components/footer/Footer";
+import ScrollToTop from "./components/@comp/ScrollToTop";
 
 function App() {
   return (
     <>
+      <ScrollToTop />
+
       <NavBar />
 
       <Suspense fallback={<PageLoader />}>

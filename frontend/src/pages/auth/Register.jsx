@@ -7,6 +7,7 @@ import { useNavigate } from "react-router";
 import { registerUser } from "../../redux/features/authSlice";
 import PassInput from "../../components/common/PassInput";
 import { toast } from "react-hot-toast";
+import GoogleAuthButton from "../../components/@comp/GoogleAuthButton";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
@@ -28,14 +29,20 @@ const Register = () => {
       return;
     }
 
-    await toast.promise(dispatch(registerUser(form)).unwrap(), {
-      loading: "Loading...",
-      success: () => {
-        navigate("/", { replace: true });
-        return "Registration successful";
+    await toast.promise(
+      dispatch(registerUser(form)).unwrap(),
+      {
+        loading: "Loading...",
+        success: () => {
+          navigate("/", { replace: true });
+          return "Registration successful";
+        },
+        error: (err) => err,
       },
-      error: (err) => err,
-    });
+      {
+        position: "top-center",
+      },
+    );
   };
 
   return (
@@ -43,9 +50,6 @@ const Register = () => {
       <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
 
-        {error && (
-          <p className="text-red-500 text-center font-medium mb-4">{error}</p>
-        )}
         <form
           className="flex gap-2 flex-col"
           onSubmit={handleSubmit}
@@ -78,6 +82,8 @@ const Register = () => {
             <hr className="flex-1 border border-gray-200" />
           </div>
           <br />
+
+          <GoogleAuthButton />
 
           <Button type="submit" loading={loading} disabled={loading}>
             Register

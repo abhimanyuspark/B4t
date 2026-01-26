@@ -1,6 +1,50 @@
 import User from "../models/user.model.js";
 import jwt from "jsonwebtoken";
 import bcrypt from "bcrypt";
+import { OAuth2Client } from "google-auth-library";
+
+const client = new OAuth2Client(process.env.GOOGLE_CLIENT_ID);
+
+export const googleAuth = async (req, res, next) => {
+  try {
+    const { idToken } = req.body;
+    if (!idToken) {
+      return res.status(400).json({ message: "Token missing" });
+    }
+
+    const ticket = await client.verifyIdToken({
+      idToken,
+      audience: process.env.GOOGLE_CLIENT_ID,
+    });
+
+    const payload = ticket.getPayload();
+    const { email, name, sub, picture } = payload;
+
+    let user = await User.findOne({ email });
+
+    if (!user) {
+      user = await User.create({
+        name,
+        email,
+        provider: "google",
+        oauthId: sub,
+        isVerified: true,
+        // profileImage: { url: picture },
+      });
+    }
+
+    if (user.isBlocked) {
+      return res.status(403).json({ message: "Account blocked" });
+    }
+
+    generateToken(user._id, res);
+    const { password: userPassword, ...userData } = user._doc;
+    userData.password = undefined;
+    res.status(200).json(userData);
+  } catch (err) {
+    next(err);
+  }
+};
 
 export const register = async (req, res) => {
   try {
