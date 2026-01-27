@@ -1,12 +1,8 @@
-import { useDispatch, useSelector } from "react-redux";
-import { Link, useNavigate } from "react-router";
-import { FaSignOutAlt } from "react-icons/fa";
-import { logout } from "../../redux/features/authSlice";
-import { toast } from "react-hot-toast";
-import Select from "../common/Select";
-import { languages } from "../../utils/initial";
-import { useState } from "react";
+import { useSelector } from "react-redux";
+import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
+import LanguageSelect from "../@comp/LanguageSelect";
+import LogoutButton from "../@comp/LogoutButton";
 
 const NavBar = () => {
   return (
@@ -28,6 +24,15 @@ const NavContent = () => {
       <div>
         {isAuthenticated ? (
           <ul className="flex space-x-4 items-center">
+            <li>
+              <span
+                style={{ alignItems: "start", gap: "0px", fontSize: "0.8rem" }}
+                className="link-gray-btn flex-col"
+              >
+                <span>{user?.name}</span>
+                <span className="first-letter:uppercase">{user?.role}</span>
+              </span>
+            </li>
             <li>
               <LogoutButton />
             </li>
@@ -51,52 +56,6 @@ const NavContent = () => {
         )}
       </div>
     </div>
-  );
-};
-
-const LanguageSelect = () => {
-  const lang = localStorage.getItem("lang");
-  const int = languages.find((l) => lang && lang === l.code && l);
-  const [option, setOption] = useState(int || languages[0]);
-  const { i18n } = useTranslation();
-
-  const handleLanguageChange = (selectedOption) => {
-    setOption(selectedOption);
-    i18n.changeLanguage(selectedOption?.code);
-    localStorage.setItem("lang", selectedOption?.code);
-  };
-
-  return (
-    <Select
-      text={(opt) => opt?.name}
-      options={languages}
-      value={option}
-      className="w-30"
-      onChange={handleLanguageChange}
-    />
-  );
-};
-
-const LogoutButton = () => {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-  const { t } = useTranslation();
-
-  const onLogout = async () => {
-    await toast.promise(dispatch(logout()).unwrap(), {
-      loading: "Logging out...",
-      success: () => {
-        navigate("/login");
-        return "Logged out successfully!";
-      },
-      error: (err) => `Logout failed: ${err}`,
-    });
-  };
-
-  return (
-    <button className="link-gray-btn" onClick={onLogout}>
-      <FaSignOutAlt /> {t("logout")}
-    </button>
   );
 };
 

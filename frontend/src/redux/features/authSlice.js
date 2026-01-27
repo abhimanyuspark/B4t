@@ -1,15 +1,12 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-// Set your API base URL
-const API_URL = "http://localhost:5000/api/auth";
+import api from "../services/api";
 
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/register`, userData);
+      const response = await api.post(`/auth/register`, userData);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
@@ -22,7 +19,7 @@ export const loginUser = createAsyncThunk(
   "auth/loginUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await axios.post(`${API_URL}/login`, userData);
+      const response = await api.post(`/auth/login`, userData);
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
@@ -34,8 +31,8 @@ export const googleLoginUser = createAsyncThunk(
   "auth/googleLoginUser",
   async (idToken, { rejectWithValue }) => {
     try {
-      const response = await axios.post(
-        `${API_URL}/google`,
+      const response = await api.post(
+        `/auth/google`,
         { idToken },
         { withCredentials: true },
       );
@@ -48,16 +45,28 @@ export const googleLoginUser = createAsyncThunk(
 
 export const logout = createAsyncThunk("auth/logout", async () => {
   try {
-    const response = await axios.post(`${API_URL}/logout`);
+    const response = await api.post(`/auth/logout`);
     return response.data;
   } catch (error) {
     return rejectWithValue(error.response?.data?.message || error.message);
   }
 });
 
+export const refreshAuth = createAsyncThunk(
+  "auth/refreshAuth",
+  async (_, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/auth/refresh`);
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  },
+);
+
 const initialState = {
   user: null,
-  loading: false,
+  loading: true,
   error: null,
   isAuthenticated: false,
 };
@@ -109,9 +118,29 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = action.payload;
       })
+      // Refresh Auth
+      .addCase(refreshAuth.pending, (state) => {
+        state.loading = true;
+      })
+      .addCase(refreshAuth.fulfilled, (state, action) => {
+        state.loading = false;
+        state.user = action.payload;
+        state.isAuthenticated = true;
+      })
+      .addCase(refreshAuth.rejected, (state) => {
+        state.loading = false;
+        state.user = null;
+        state.isAuthenticated = false;
+      })
       // Logout
+      .addCase(logout.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
       .addCase(logout.fulfilled, (state) => {
         state.user = null;
+        state.error = null;
+        state.loading = false;
         state.isAuthenticated = false;
       });
   },
