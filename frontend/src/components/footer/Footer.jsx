@@ -5,7 +5,7 @@ const Footer = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="fixed z-50 bottom-0 left-0 w-full bg-white border border-gray-200 px-8 py-2 flex items-center gap-2 top-shadow">
+    <div className="fixed z-30 bottom-0 left-0 w-full h-15 px-4 sm:px-8 bg-white border border-gray-200 flex items-center gap-2">
       <ul className="flex justify-between items-center w-full">
         {footerNavigation.map((item, index) => (
           <li key={index}>

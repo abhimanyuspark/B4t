@@ -1,4 +1,5 @@
 import { FaAirbnb, FaHome, FaShoppingBag, FaUsers } from "react-icons/fa";
+import { FcHome, FcSupport } from "react-icons/fc";
 
 export const languages = [
   { code: "en", name: "English" },
@@ -25,5 +26,18 @@ export const footerNavigation = [
     name: "Support",
     href: "/support",
     icon: FaUsers,
+  },
+];
+
+export const sidebarNavigation = [
+  {
+    name: "Home",
+    href: "/",
+    icon: FcHome,
+  },
+  {
+    name: "Support",
+    href: "/support",
+    icon: FcSupport,
   },
 ];

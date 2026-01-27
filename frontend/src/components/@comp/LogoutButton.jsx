@@ -24,8 +24,8 @@ const LogoutButton = () => {
   };
 
   return (
-    <button className="link-gray-btn" onClick={onLogout}>
-      <FaSignOutAlt /> {t("logout")}
+    <button onClick={onLogout}>
+      <FaSignOutAlt /> <span>{t("logout")}</span>
     </button>
   );
 };

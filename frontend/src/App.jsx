@@ -40,13 +40,11 @@ function App() {
       <Suspense fallback={<PageLoader />}>
         <Routes>
           <Route element={<UserLayout />}>
-            <Route path="/" element={<DashBoard />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
 
-            <Route
-              element={<ProtectedRoute allowedRoles={["admin", "user"]} />}
-            >
+            <Route element={<ProtectedRoute />}>
+              <Route path="/" element={<DashBoard />} />
               <Route path="/profile" element={<Profile />} />
             </Route>
 
