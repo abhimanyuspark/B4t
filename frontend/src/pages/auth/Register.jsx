@@ -3,7 +3,7 @@ import Button from "../../components/common/Button";
 import Input from "../../components/common/Input";
 import validation from "../../utils/validation";
 import { useDispatch, useSelector } from "react-redux";
-import { useNavigate } from "react-router";
+import { Link, useNavigate } from "react-router";
 import { registerUser } from "../../redux/features/authSlice";
 import PassInput from "../../components/common/PassInput";
 import { toast } from "react-hot-toast";
@@ -46,50 +46,51 @@ const Register = () => {
   };
 
   return (
-    <div className="flex items-center justify-center bg-gray-100">
-      <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-        <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+    <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
+      <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
 
-        <form
-          className="flex gap-2 flex-col"
-          onSubmit={handleSubmit}
-          noValidate
-        >
-          <Input
-            type="name"
-            name="name"
-            value={form.name}
-            onChange={handleChange}
-            error={errors.name}
-          />
-          <Input
-            type="email"
-            name="email"
-            value={form.email}
-            onChange={handleChange}
-            error={errors.email}
-          />
-          <PassInput
-            value={form.password}
-            onChange={handleChange}
-            error={errors.password}
-          />
+      <form className="flex gap-2 flex-col" onSubmit={handleSubmit} noValidate>
+        <Input
+          type="name"
+          name="name"
+          value={form.name}
+          onChange={handleChange}
+          error={errors.name}
+        />
+        <Input
+          type="email"
+          name="email"
+          value={form.email}
+          onChange={handleChange}
+          error={errors.email}
+        />
+        <PassInput
+          value={form.password}
+          onChange={handleChange}
+          error={errors.password}
+        />
 
-          <br />
-          <div className="flex items-center gap-4">
-            <hr className="flex-1 border border-gray-200" />
-            <span className="text-gray-500">or</span>
-            <hr className="flex-1 border border-gray-200" />
-          </div>
-          <br />
+        <Button type="submit" loading={loading} disabled={loading}>
+          Register
+        </Button>
 
-          <GoogleAuthButton />
+        <br />
+        <div className="flex items-center gap-4">
+          <hr className="flex-1 border border-gray-200" />
+          <span className="text-gray-500">or</span>
+          <hr className="flex-1 border border-gray-200" />
+        </div>
+        <br />
 
-          <Button type="submit" loading={loading} disabled={loading}>
-            Register
-          </Button>
-        </form>
-      </div>
+        <GoogleAuthButton />
+      </form>
+
+      <p className="text-base text-gray-700 mt-4">
+        Have an account ?
+        <Link to="/login" className="text-green-600 hover:underline">
+          Login
+        </Link>
+      </p>
     </div>
   );
 };

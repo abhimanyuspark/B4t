@@ -10,14 +10,13 @@ import {
 } from "./pages";
 import { Routes, Route } from "react-router";
 import PageLoader from "./components/common/PageLoader";
-import NavBar from "./components/nav/NavBar";
 import UserLayout from "./components/layout/UserLayout";
 import { Toaster } from "react-hot-toast";
-import Footer from "./components/footer/Footer";
 import ScrollToTop from "./components/@comp/ScrollToTop";
 import { useDispatch, useSelector } from "react-redux";
 import { refreshAuth } from "./redux/features/authSlice";
 import ProtectedRoute from "./components/@comp/ProtectedRoute";
+import Layout from "./components/layout/Layout";
 
 function App() {
   const dispatch = useDispatch();
@@ -27,22 +26,19 @@ function App() {
     dispatch(refreshAuth());
   }, [dispatch]);
 
-  if (loading) {
-    return <PageLoader />;
-  }
-
   return (
     <>
+      {loading && <PageLoader />}
       <ScrollToTop />
-
-      <NavBar />
 
       <Suspense fallback={<PageLoader />}>
         <Routes>
-          <Route element={<UserLayout />}>
+          <Route element={<Layout />}>
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+          </Route>
 
+          <Route element={<UserLayout />}>
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<DashBoard />} />
               <Route path="/profile" element={<Profile />} />
@@ -57,8 +53,6 @@ function App() {
           </Route>
         </Routes>
       </Suspense>
-
-      <Footer />
 
       <Toaster position="top-right" reverseOrder={false} />
     </>

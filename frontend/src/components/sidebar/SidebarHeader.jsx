@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
 
-const SidebarHeader = () => {
+const SidebarHeader = ({ onClose }) => {
   const { user } = useSelector((state) => state.auth);
 
   return (
@@ -17,6 +17,7 @@ const SidebarHeader = () => {
       </div>
 
       <Link
+        onClick={onClose}
         to="/profile"
         className="text-center block w-full mt-2 p-1 text-sm rounded bg-green-50 hover:bg-green-200"
       >

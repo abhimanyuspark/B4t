@@ -1,20 +1,24 @@
 import { Outlet } from "react-router";
 import DSidebar from "../sidebar/DSidebar";
-import { useSelector } from "react-redux";
+import Footer from "../footer/Footer";
+import NavBar from "../nav/NavBar";
 
 const UserLayout = () => {
-  const { isAuthenticated } = useSelector((state) => state.auth);
-
   return (
-    <div className="bg-gray-100 flex w-full h-screen pt-16">
-      {isAuthenticated && (
+    <div>
+      <NavBar />
+
+      <div className="bg-gray-100 flex w-full h-screen pt-16">
         <div className="shrink-0 sm:block hidden">
           <DSidebar />
         </div>
-      )}
-      <div className="flex-1 p-4 overflow-y-auto h-[calc(100vh-122px)]">
-        <Outlet />
+
+        <div className="flex-1 p-4 overflow-y-auto h-[calc(100vh-122px)]">
+          <Outlet />
+        </div>
       </div>
+
+      <Footer />
     </div>
   );
 };

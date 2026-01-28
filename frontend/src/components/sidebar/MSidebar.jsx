@@ -2,11 +2,18 @@ import { useState } from "react";
 import { FaArrowLeft, FaBars } from "react-icons/fa";
 import Sidebar from "./Sidebar";
 import { useLocation, useNavigate } from "react-router";
+import { useSelector } from "react-redux";
 
 const MSidebar = () => {
   const [menu, setMenu] = useState(false);
+  const { isAuthenticated } = useSelector((state) => state.auth);
+
   const { pathname } = useLocation();
   const navigate = useNavigate();
+
+  if (!isAuthenticated) {
+    return;
+  }
 
   return (
     <div className="">
@@ -39,7 +46,11 @@ const MSidebar = () => {
           }}
           className="shadow-2xl h-screen bg-white overflow-auto p-3 w-60"
         >
-          <Sidebar />
+          <Sidebar
+            onClose={() => {
+              setMenu(false);
+            }}
+          />
         </div>
       </div>
     </div>
