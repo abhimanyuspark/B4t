@@ -1,0 +1,27 @@
+{
+  "name": "b4t",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "server": "npm run dev --prefix backend",
+    "client": "npm run dev --prefix frontend",
+    "dev": "concurrently \"npm run server\" \"npm run client\"",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/abhimanyuspark/B4t.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/abhimanyuspark/B4t/issues"
+  },
+  "homepage": "https://github.com/abhimanyuspark/B4t#readme",
+  "devDependencies": {
+    "concurrently": "^9.2.1"
+  }
+}

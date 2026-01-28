@@ -20,7 +20,7 @@ const NavContent = () => {
     <div className="flex items-center justify-between w-full">
       <div className="flex items-center gap-2">
         <MSidebar />
-        <h1 className="text-xl font-bold">MyApp</h1>
+        <h1 className="text-xl font-bold">B4t</h1>
       </div>
       <div>
         {isAuthenticated ? (
