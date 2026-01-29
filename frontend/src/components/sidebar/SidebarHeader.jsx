@@ -24,7 +24,7 @@ const SidebarHeader = ({ onClose }) => {
         to="/profile"
         className="text-center block w-full mt-2 p-2 text-sm rounded bg-green-100 hover:bg-green-300 hover:text-white"
       >
-        {t("profile.name")}
+        {t("profile.title")}
       </Link>
     </div>
   );

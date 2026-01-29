@@ -1,0 +1,108 @@
+{
+  "common": {
+    "welcome_message": "Willkommen in unserer Anwendung!",
+    "loading": "Wird geladen...",
+    "login": "Anmelden",
+    "register": "Registrieren",
+    "logout": "Abmelden",
+    "back_home": "Zurück zur Startseite",
+    "edit": "Bearbeiten",
+    "save": "Speichern",
+    "cancel": "Abbrechen",
+    "view": "Ansehen",
+    "search": "Suchen",
+    "submit": "Absenden"
+  },
+
+  "navbar": {
+    "home": "Startseite",
+    "explore": "Entdecken",
+    "flights": "Flüge",
+    "bookings": "Buchungen",
+    "support": "Support",
+    "profile": "Profil",
+    "dashboard": "Dashboard"
+  },
+
+  "dashboard": {
+    "title": "Startseite",
+    "welcome": "Willkommen zurück",
+    "subtitle": "Hier ist eine Übersicht über deine Reisen heute.",
+    "stats": {
+      "trips": "Reisen",
+      "bookings": "Buchungen",
+      "messages": "Nachrichten"
+    },
+    "quick_actions": {
+      "title": "Schnellaktionen",
+      "create_trip": "Reise erstellen",
+      "book_flight": "Flug buchen",
+      "my_bookings": "Meine Buchungen"
+    },
+    "recent_activity": {
+      "title": "Letzte Aktivitäten",
+      "flight_booked": "Flug gebucht",
+      "trip_created": "Reise erstellt"
+    }
+  },
+
+  "profile": {
+    "title": "Profil",
+    "name": "Name",
+    "age": "Alter",
+    "email": "E-Mail",
+    "role": "Rolle",
+    "edit_profile": "Profil bearbeiten"
+  },
+
+  "flights": {
+    "title": "Flüge suchen",
+    "from": "Von",
+    "to": "Nach",
+    "date": "Datum",
+    "price": "Preis",
+    "book": "Buchen",
+    "no_flights": "Keine Flüge verfügbar"
+  },
+
+  "bookings": {
+    "title": "Meine Buchungen",
+    "booking_id": "Buchungs-ID",
+    "status": "Status",
+    "confirmed": "Bestätigt",
+    "cancelled": "Storniert",
+    "no_bookings": "Du hast noch keine Buchungen.",
+    "cancel_booking": "Buchung stornieren"
+  },
+
+  "support": {
+    "title": "Support & Hilfe",
+    "subtitle": "Benötigst du Hilfe bei Buchungen, Reisen oder deinem Konto? Wir sind für dich da.",
+    "contact_title": "Support kontaktieren",
+    "name": "Dein Name",
+    "email": "Deine E-Mail",
+    "category": "Problemkategorie",
+    "message": "Beschreibe dein Problem",
+    "send": "Nachricht senden",
+    "faq_title": "Häufig gestellte Fragen",
+    "response_time": "Antwortzeit innerhalb von 24 Stunden"
+  },
+
+  "auth": {
+    "login_title": "Melde dich bei deinem Konto an",
+    "register_title": "Konto erstellen",
+    "email": "E-Mail",
+    "password": "Passwort"
+  },
+
+  "errors": {
+    "error_404": {
+      "title": "404",
+      "text": "Ups! Diese Seite scheint nicht zu existieren."
+    },
+    "unauthorized": {
+      "title": "Zugriff verweigert",
+      "text": "Du hast keine Berechtigung, diese Seite aufzurufen."
+    }
+  }
+}

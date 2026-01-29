@@ -7,7 +7,7 @@ const Footer = () => {
   const { t } = useTranslation();
 
   return (
-    <div className="fixed z-30 bottom-0 left-0 w-full h-15 px-4 sm:px-8 bg-white border border-gray-200 flex items-center gap-2">
+    <div className="fixed z-30 bottom-0 left-0 w-full h-16 px-4 sm:px-8 bg-white border border-gray-200 flex items-center gap-2">
       <ul className="flex justify-between items-center w-full">
         {footerNavigation.map((item, index) => (
           <li key={index}>

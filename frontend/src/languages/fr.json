@@ -1,0 +1,108 @@
+{
+  "common": {
+    "welcome_message": "Bienvenue dans notre application !",
+    "loading": "Chargement...",
+    "login": "Se connecter",
+    "register": "S’inscrire",
+    "logout": "Se déconnecter",
+    "back_home": "Retour à l’accueil",
+    "edit": "Modifier",
+    "save": "Enregistrer",
+    "cancel": "Annuler",
+    "view": "Voir",
+    "search": "Rechercher",
+    "submit": "Soumettre"
+  },
+
+  "navbar": {
+    "home": "Accueil",
+    "explore": "Explorer",
+    "flights": "Vols",
+    "bookings": "Réservations",
+    "support": "Support",
+    "profile": "Profil",
+    "dashboard": "Tableau de bord"
+  },
+
+  "dashboard": {
+    "title": "Accueil",
+    "welcome": "Bon retour",
+    "subtitle": "Voici un aperçu de vos voyages aujourd’hui.",
+    "stats": {
+      "trips": "Voyages",
+      "bookings": "Réservations",
+      "messages": "Messages"
+    },
+    "quick_actions": {
+      "title": "Actions rapides",
+      "create_trip": "Créer un voyage",
+      "book_flight": "Réserver un vol",
+      "my_bookings": "Mes réservations"
+    },
+    "recent_activity": {
+      "title": "Activité récente",
+      "flight_booked": "Vol réservé",
+      "trip_created": "Voyage créé"
+    }
+  },
+
+  "profile": {
+    "title": "Profil",
+    "name": "Nom",
+    "age": "Âge",
+    "email": "E-mail",
+    "role": "Rôle",
+    "edit_profile": "Modifier le profil"
+  },
+
+  "flights": {
+    "title": "Rechercher des vols",
+    "from": "De",
+    "to": "À",
+    "date": "Date",
+    "price": "Prix",
+    "book": "Réserver",
+    "no_flights": "Aucun vol disponible"
+  },
+
+  "bookings": {
+    "title": "Mes réservations",
+    "booking_id": "ID de réservation",
+    "status": "Statut",
+    "confirmed": "Confirmée",
+    "cancelled": "Annulée",
+    "no_bookings": "Vous n’avez aucune réservation.",
+    "cancel_booking": "Annuler la réservation"
+  },
+
+  "support": {
+    "title": "Support & Assistance",
+    "subtitle": "Besoin d’aide pour les réservations, les voyages ou votre compte ? Nous sommes là pour vous.",
+    "contact_title": "Contacter le support",
+    "name": "Votre nom",
+    "email": "Votre e-mail",
+    "category": "Catégorie du problème",
+    "message": "Décrivez votre problème",
+    "send": "Envoyer le message",
+    "faq_title": "Questions fréquentes",
+    "response_time": "Temps de réponse sous 24 heures"
+  },
+
+  "auth": {
+    "login_title": "Connectez-vous à votre compte",
+    "register_title": "Créer un compte",
+    "email": "E-mail",
+    "password": "Mot de passe"
+  },
+
+  "errors": {
+    "error_404": {
+      "title": "404",
+      "text": "Oups ! Il semble que cette destination n’existe pas."
+    },
+    "unauthorized": {
+      "title": "Accès refusé",
+      "text": "Vous n’avez pas la permission d’accéder à cette page."
+    }
+  }
+}

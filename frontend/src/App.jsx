@@ -1,11 +1,14 @@
 import { Suspense, useEffect } from "react";
 import {
+  Add_Flight,
   AdminDashboard,
+  Bookings,
   DashBoard,
   Login,
   NotFound,
   Profile,
   Register,
+  Support,
   UnAuthorized,
 } from "./pages";
 import { Routes, Route } from "react-router";
@@ -42,6 +45,9 @@ function App() {
             <Route element={<ProtectedRoute />}>
               <Route path="/" element={<DashBoard />} />
               <Route path="/profile" element={<Profile />} />
+              <Route path="/add-flight" element={<Add_Flight />} />
+              <Route path="/bookings" element={<Bookings />} />
+              <Route path="/support" element={<Support />} />
             </Route>
 
             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>

@@ -8,13 +8,15 @@ import { registerUser } from "../../redux/features/authSlice";
 import PassInput from "../../components/common/PassInput";
 import { toast } from "react-hot-toast";
 import GoogleAuthButton from "../../components/@comp/GoogleAuthButton";
+import { useTranslation } from "react-i18next";
 
 const Register = () => {
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -47,7 +49,9 @@ const Register = () => {
 
   return (
     <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Register</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        {t("auth.register_title")}
+      </h2>
 
       <form className="flex gap-2 flex-col" onSubmit={handleSubmit} noValidate>
         <Input
@@ -71,7 +75,7 @@ const Register = () => {
         />
 
         <Button type="submit" loading={loading} disabled={loading}>
-          Register
+          {t("common.register")}
         </Button>
 
         <br />
@@ -88,7 +92,7 @@ const Register = () => {
       <p className="text-base text-gray-700 mt-4">
         Have an account ?
         <Link to="/login" className="text-green-600 hover:underline">
-          Login
+          {t("common.login")}
         </Link>
       </p>
     </div>

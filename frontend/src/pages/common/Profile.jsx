@@ -5,6 +5,7 @@ import Button from "../../components/common/Button";
 import Hr from "../../components/common/Hr";
 import Tag from "../../components/common/Tag";
 import { useTranslation } from "react-i18next";
+import Container from "../../components/common/Container";
 
 export default function Profile() {
   const dispatch = useDispatch();
@@ -16,7 +17,7 @@ export default function Profile() {
   const handleUpdate = () => {};
 
   return (
-    <div className="bg-white rounded h-full p-8 shadow">
+    <Container>
       <div className="flex items-center gap-6">
         <Avatar size="lg" />
 
@@ -32,9 +33,9 @@ export default function Profile() {
       <div className="flex justify-end">
         <Button onClick={handleUpdate} className="w-auto">
           <FaUserEdit className="text-xl" />
-          {t("edit")} {t("profile.name")}
+          {t("common.edit")} {t("profile.title")}
         </Button>
       </div>
-    </div>
+    </Container>
   );
 }

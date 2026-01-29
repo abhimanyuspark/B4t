@@ -8,13 +8,15 @@ import { loginUser } from "../../redux/features/authSlice";
 import PassInput from "../../components/common/PassInput";
 import { toast } from "react-hot-toast";
 import GoogleAuthButton from "../../components/@comp/GoogleAuthButton";
+import { useTranslation } from "react-i18next";
 
 const Login = () => {
   const [form, setForm] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
-  const { loading, error } = useSelector((state) => state.auth);
+  const { loading } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { t } = useTranslation();
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -47,7 +49,9 @@ const Login = () => {
 
   return (
     <div className="bg-white p-8 rounded shadow-md w-full max-w-md">
-      <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
+      <h2 className="text-2xl font-bold mb-6 text-center">
+        {t("auth.login_title")}
+      </h2>
 
       <form className="flex gap-2 flex-col" onSubmit={handleSubmit} noValidate>
         <Input
@@ -64,7 +68,7 @@ const Login = () => {
         />
 
         <Button type="submit" loading={loading} disabled={loading}>
-          Login
+          {t("common.login")}
         </Button>
 
         <br />
@@ -81,7 +85,7 @@ const Login = () => {
       <p className="text-base text-gray-700 mt-4">
         Don't have an account ?
         <Link to="/register" className="text-green-600 hover:underline">
-          Register
+          {t("common.register")}
         </Link>
       </p>
     </div>

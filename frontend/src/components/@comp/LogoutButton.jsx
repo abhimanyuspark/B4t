@@ -25,7 +25,7 @@ const LogoutButton = () => {
 
   return (
     <button onClick={onLogout}>
-      <FaSignOutAlt /> <span>{t("logout")}</span>
+      <FaSignOutAlt /> <span>{t("common.logout")}</span>
     </button>
   );
 };

@@ -8,15 +8,15 @@ const UserLayout = () => {
     <div>
       <NavBar />
 
-      <div className="bg-gray-100 flex w-full h-screen pt-16">
-        <div className="shrink-0 w-70 bg-white text-gray-700 p-2 sm:block hidden overflow-y-auto h-[calc(100vh-122px)]">
+      <main className="bg-gray-100 flex w-full min-h-screen py-16">
+        <div className="shrink-0 w-70 bg-white fixed top-16 h-full text-gray-700 p-2 pb-34 sm:block hidden overflow-auto">
           <DSidebar />
         </div>
 
-        <div className="flex-1 p-4 overflow-y-auto h-[calc(100vh-122px)]">
+        <div className="flex-1 p-4 overflow-y-auto sm:pl-75">
           <Outlet />
         </div>
-      </div>
+      </main>
 
       <Footer />
     </div>

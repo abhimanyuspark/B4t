@@ -1,37 +1,108 @@
 {
-  "welcome_message": "Welcome to our application!",
-  "loading": "Loading...",
-  "login": "Log In",
-  "register": "Register",
-  "logout": "Log Out",
-  "back": "Back to Home",
-  "edit": "Edit",
+  "common": {
+    "welcome_message": "Welcome to our application!",
+    "loading": "Loading...",
+    "login": "Log In",
+    "register": "Register",
+    "logout": "Log Out",
+    "back_home": "Back to Home",
+    "edit": "Edit",
+    "save": "Save",
+    "cancel": "Cancel",
+    "view": "View",
+    "search": "Search",
+    "submit": "Submit"
+  },
+
+  "navbar": {
+    "home": "Home",
+    "explore": "Explore",
+    "flights": "Flights",
+    "bookings": "Bookings",
+    "support": "Support",
+    "profile": "Profile",
+    "dashboard": "Dashboard"
+  },
+
+  "dashboard": {
+    "title": "Home",
+    "welcome": "Welcome back",
+    "subtitle": "Here’s what’s happening with your travels today.",
+    "stats": {
+      "trips": "Trips",
+      "bookings": "Bookings",
+      "messages": "Messages"
+    },
+    "quick_actions": {
+      "title": "Quick Actions",
+      "create_trip": "Create Trip",
+      "book_flight": "Book Flight",
+      "my_bookings": "My Bookings"
+    },
+    "recent_activity": {
+      "title": "Recent Activity",
+      "flight_booked": "Flight booked",
+      "trip_created": "Trip created"
+    }
+  },
 
   "profile": {
-    "name": "Profile",
-    "age": "Age"
+    "title": "Profile",
+    "name": "Name",
+    "age": "Age",
+    "email": "Email",
+    "role": "Role",
+    "edit_profile": "Edit Profile"
   },
-  "settings": {
-    "name": "Settings"
+
+  "flights": {
+    "title": "Find Flights",
+    "from": "From",
+    "to": "To",
+    "date": "Date",
+    "price": "Price",
+    "book": "Book",
+    "no_flights": "No flights available"
   },
-  "home": {
-    "name": "Home"
-  },
+
   "bookings": {
-    "name": "bookings"
+    "title": "My Bookings",
+    "booking_id": "Booking ID",
+    "status": "Status",
+    "confirmed": "Confirmed",
+    "cancelled": "Cancelled",
+    "no_bookings": "You have no bookings yet.",
+    "cancel_booking": "Cancel Booking"
   },
+
   "support": {
-    "name": "Support"
+    "title": "Support & Help",
+    "subtitle": "Need help with bookings, trips, or your account? We’re here for you.",
+    "contact_title": "Contact Support",
+    "name": "Your Name",
+    "email": "Your Email",
+    "category": "Issue Category",
+    "message": "Describe your issue",
+    "send": "Send Message",
+    "faq_title": "Frequently Asked Questions",
+    "response_time": "Response time within 24 hours"
   },
-  "add_flight": {
-    "name": "Add Flight"
+
+  "auth": {
+    "login_title": "Log In to Your Account",
+    "register_title": "Create an Account",
+    "email": "Email",
+    "password": "Password"
   },
-  "error_404": {
-    "text": "Oops! Looks like this destination doesn’t exist.",
-    "title": "404"
-  },
-  "unauth": {
-    "text": "You don’t have permission to access this page.",
-    "title": "Access Denied"
+
+  "errors": {
+    "error_404": {
+      "title": "404",
+      "text": "Oops! Looks like this destination doesn’t exist."
+    },
+    "unauthorized": {
+      "title": "Access Denied",
+      "text": "You don’t have permission to access this page."
+    }
   }
 }

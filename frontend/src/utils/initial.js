@@ -4,31 +4,33 @@ import { FcHome, FcSupport } from "react-icons/fc";
 export const languages = [
   { code: "en", name: "English" },
   { code: "hi", name: "Hindi" },
+  { code: "fr", name: "French" },
+  { code: "de", name: "German" },
 ];
 
 export const footerNavigation = [
   {
     name: "Home",
     href: "/",
-    langCode: "home.name",
+    langCode: "dashboard.title",
     icon: FaHome,
   },
   {
     name: "Add Flight",
     href: "/add-flight",
-    langCode: "add_flight.name",
+    langCode: "flights.title",
     icon: FaAirbnb,
   },
   {
     name: "Bookings",
     href: "/bookings",
-    langCode: "bookings.name",
+    langCode: "bookings.title",
     icon: FaShoppingBag,
   },
   {
     name: "Support",
     href: "/support",
-    langCode: "support.name",
+    langCode: "support.title",
     icon: FaUsers,
   },
 ];
@@ -37,13 +39,13 @@ export const sidebarNavigation = [
   {
     name: "Home",
     href: "/",
-    langCode: "home.name",
+    langCode: "dashboard.title",
     icon: FcHome,
   },
   {
     name: "Support",
     href: "/support",
-    langCode: "support.name",
+    langCode: "support.title",
     icon: FcSupport,
   },
 ];
