@@ -1,8 +1,10 @@
+import { useTranslation } from "react-i18next";
 import { footerNavigation } from "../../utils/initial";
 import { Link, useLocation } from "react-router";
 
 const Footer = () => {
   const { pathname } = useLocation();
+  const { t } = useTranslation();
 
   return (
     <div className="fixed z-30 bottom-0 left-0 w-full h-15 px-4 sm:px-8 bg-white border border-gray-200 flex items-center gap-2">
@@ -19,7 +21,7 @@ const Footer = () => {
               className="text-gray-600 hover:text-green-600 flex items-center flex-col"
             >
               <span className="text-2xl">{item.icon()}</span>
-              <span className="text-sm">{item.name}</span>
+              <span className="text-sm">{t(item.langCode)}</span>
             </Link>
           </li>
         ))}

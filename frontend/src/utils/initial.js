@@ -10,21 +10,25 @@ export const footerNavigation = [
   {
     name: "Home",
     href: "/",
+    langCode: "home.name",
     icon: FaHome,
   },
   {
     name: "Add Flight",
     href: "/add-flight",
+    langCode: "add_flight.name",
     icon: FaAirbnb,
   },
   {
     name: "Bookings",
     href: "/bookings",
+    langCode: "bookings.name",
     icon: FaShoppingBag,
   },
   {
     name: "Support",
     href: "/support",
+    langCode: "support.name",
     icon: FaUsers,
   },
 ];
@@ -33,11 +37,13 @@ export const sidebarNavigation = [
   {
     name: "Home",
     href: "/",
+    langCode: "home.name",
     icon: FcHome,
   },
   {
     name: "Support",
     href: "/support",
+    langCode: "support.name",
     icon: FcSupport,
   },
 ];

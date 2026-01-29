@@ -9,7 +9,7 @@ const UserLayout = () => {
       <NavBar />
 
       <div className="bg-gray-100 flex w-full h-screen pt-16">
-        <div className="shrink-0 sm:block hidden">
+        <div className="shrink-0 w-70 bg-white text-gray-700 p-2 sm:block hidden overflow-y-auto h-[calc(100vh-122px)]">
           <DSidebar />
         </div>
 

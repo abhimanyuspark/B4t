@@ -1,10 +1,37 @@
 {
-    "welcome_message": "Welcome to our application!",
-    "login": "Log In",
-    "register": "Register",
-    "logout": "Log Out",
-    "profile": "Profile",
-    "settings": "Settings",
-    "error_404": "Page Not Found",
-    "loading": "Loading..."
+  "welcome_message": "Welcome to our application!",
+  "loading": "Loading...",
+  "login": "Log In",
+  "register": "Register",
+  "logout": "Log Out",
+  "back": "Back to Home",
+  "edit": "Edit",
+
+  "profile": {
+    "name": "Profile",
+    "age": "Age"
+  },
+  "settings": {
+    "name": "Settings"
+  },
+  "home": {
+    "name": "Home"
+  },
+  "bookings": {
+    "name": "bookings"
+  },
+  "support": {
+    "name": "Support"
+  },
+  "add_flight": {
+    "name": "Add Flight"
+  },
+  "error_404": {
+    "text": "Oops! Looks like this destination doesn’t exist.",
+    "title": "404"
+  },
+  "unauth": {
+    "text": "You don’t have permission to access this page.",
+    "title": "Access Denied"
+  }
 }

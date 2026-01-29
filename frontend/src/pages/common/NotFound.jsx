@@ -1,33 +1,27 @@
 import { Link } from "react-router";
+import { FaMapMarkedAlt } from "react-icons/fa";
+import { useTranslation } from "react-i18next";
+import CenterContainer from "../../components/common/CenterContainer";
 
-const NotFound = () => (
-  <div className="flex flex-col items-center justify-center">
-    <div className="bg-white rounded-xl shadow-lg p-10 flex flex-col items-center">
-      <svg
-        className="w-20 h-20 text-green-500 mb-6"
-        fill="none"
-        stroke="currentColor"
-        viewBox="0 0 64 64"
-      >
-        <circle cx="32" cy="32" r="30" strokeWidth="4" />
-        <path
-          d="M24 24h16M24 32h16M24 40h8"
-          strokeWidth="4"
-          strokeLinecap="round"
-        />
-      </svg>
-      <h1 className="text-4xl font-bold text-gray-800 mb-2">404</h1>
-      <p className="text-lg text-gray-600 mb-6">
-        Oops! The page you're looking for doesn't exist.
-      </p>
-      <Link
-        to="/"
-        className="px-6 py-2 bg-green-500 text-white rounded-lg shadow hover:bg-green-600 transition"
-      >
-        Go Home
-      </Link>
-    </div>
-  </div>
-);
+export default function NotFound() {
+  const { t } = useTranslation();
 
-export default NotFound;
+  return (
+    <CenterContainer>
+      <div className="text-center max-w-md">
+        <FaMapMarkedAlt className="mx-auto text-green-500 text-6xl mb-4" />
+        <h1 className="text-5xl font-bold text-green-800 mb-2">
+          {t("error_404.title")}
+        </h1>
+        <p className="text-gray-600 mb-6">{t("error_404.text")}</p>
+
+        <Link
+          to="/"
+          className="inline-block px-6 py-3 bg-green-600 text-white rounded hover:bg-green-700"
+        >
+          {t("back")}
+        </Link>
+      </div>
+    </CenterContainer>
+  );
+}

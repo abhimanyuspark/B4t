@@ -1,27 +1,30 @@
 import { useSelector } from "react-redux";
 import { Link } from "react-router";
+import { useTranslation } from "react-i18next";
+import Avatar from "../@comp/Avatar";
 
 const SidebarHeader = ({ onClose }) => {
   const { user } = useSelector((state) => state.auth);
+  const { t } = useTranslation();
 
   return (
-    <div className="bg-green-100 rounded p-2 sticky top-0 shadow">
+    <div className="bg-green-200 rounded p-2 sticky top-0 shadow">
       <div className="flex gap-4 items-center">
-        <div className="size-12 rounded-full bg-green-300 border-2 border-white">
-          {user?.profilePic && <img src={user?.profilePic} alt={user?.name} />}
-        </div>
-        <div className="text-sm text-gray-500 flex flex-col">
+        <Avatar />
+        <div className="text-sm flex flex-col">
           <span>{user?.name}</span>
-          <span>{user?.age || 20} Age</span>
+          <span>
+            {user?.age || 20} {t("profile.age")}
+          </span>
         </div>
       </div>
 
       <Link
         onClick={onClose}
         to="/profile"
-        className="text-center block w-full mt-2 p-1 text-sm rounded bg-green-50 hover:bg-green-200"
+        className="text-center block w-full mt-2 p-2 text-sm rounded bg-green-100 hover:bg-green-300 hover:text-white"
       >
-        Profile
+        {t("profile.name")}
       </Link>
     </div>
   );

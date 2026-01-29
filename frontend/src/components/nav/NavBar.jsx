@@ -3,6 +3,7 @@ import { Link } from "react-router";
 import { useTranslation } from "react-i18next";
 import LanguageSelect from "../@comp/LanguageSelect";
 import MSidebar from "../sidebar/MSidebar";
+import { FaPlaneDeparture } from "react-icons/fa";
 
 const NavBar = () => {
   return (
@@ -18,9 +19,10 @@ const NavContent = () => {
 
   return (
     <div className="flex items-center justify-between w-full">
-      <div className="flex items-center gap-2">
+      <div className="flex items-center sm:gap-0 gap-2">
         <MSidebar />
-        <h1 className="text-xl font-bold">B4t</h1>
+        <h1 className="text-2xl font-bold">B4t</h1>
+        <FaPlaneDeparture className="text-green-600 text-4xl ml-4" />
       </div>
       <div>
         {isAuthenticated ? (

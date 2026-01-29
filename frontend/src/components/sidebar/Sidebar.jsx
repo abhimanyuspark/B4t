@@ -1,17 +1,18 @@
 import SidebarHeader from "./SidebarHeader";
 import SidebarContent from "./SidebarContent";
 import LogoutButton from "../@comp/LogoutButton";
+import Hr from "../common/Hr";
 
 const Sidebar = ({ onClose }) => {
   return (
-    <div className="flex gap-4 flex-col">
+    <div className="flex flex-col">
       <SidebarHeader onClose={onClose} />
 
-      <hr className="border border-gray-100" />
+      <Hr />
 
       <SidebarContent onClose={onClose} />
 
-      <hr className="border border-gray-100" />
+      <Hr />
 
       <div className="side-logout-btn">
         <LogoutButton />

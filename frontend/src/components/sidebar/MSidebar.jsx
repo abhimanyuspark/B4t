@@ -16,7 +16,7 @@ const MSidebar = () => {
   }
 
   return (
-    <div className="">
+    <div>
       <button className="text-xl text-gray-600 sm:hidden block bg-gray-100 hover:bg-gray-200 p-2 rounded">
         {pathname === "/" ? (
           <FaBars
