@@ -1,28 +1,27 @@
-import { FaUser } from "react-icons/fa";
-import { useSelector } from "react-redux";
+const Avatar = ({ profilePicture, className, size = 40 }) => {
+  const avatarSize = {
+    width: size,
+    height: size,
+    minWidth: size,
+    minHeight: size,
+    maxWidth: size,
+    maxHeight: size,
+  };
 
-const sizes = {
-  sm: { p: "text-4xl size-12", c: "mt-1" },
-  md: { p: "text-6xl size-20", c: "mt-2" },
-  lg: { p: "text-8xl size-28", c: "mt-3" },
-};
-
-const Avatar = ({ size = "sm" }) => {
-  const { user } = useSelector((state) => state.auth);
+  const Logo =
+    "https://res.cloudinary.com/dyzuf567d/image/upload/v1751211556/Blog/l3fomqurs4jsbc9nd9w4.png";
 
   return (
     <div
-      className={`${sizes[size].p} rounded-full bg-green-200 border-2 border-white overflow-hidden`}
+      className={`rounded-full overflow-hidden ${className || ""}`}
+      style={avatarSize}
     >
-      {user?.profilePic ? (
-        <img src={user?.profilePic} alt={user?.name} />
-      ) : (
-        <div
-          className={`${sizes[size].c} text-white flex justify-center items-center h-full`}
-        >
-          <FaUser />
-        </div>
-      )}
+      <img
+        className="size-full object-cover"
+        src={profilePicture || Logo}
+        onError={(e) => (e.currentTarget.src = Logo)}
+        alt="avatar"
+      />
     </div>
   );
 };

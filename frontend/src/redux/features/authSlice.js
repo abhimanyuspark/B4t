@@ -1,12 +1,18 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import api from "../services/api";
+import { getUserLocation } from "../../utils/getUserLocation";
 
 // Async thunk for user registration
 export const registerUser = createAsyncThunk(
   "auth/registerUser",
   async (userData, { rejectWithValue }) => {
     try {
-      const response = await api.post(`/auth/register`, userData);
+      const location = await getUserLocation();
+
+      const response = await api.post("/auth/register", {
+        ...userData,
+        location,
+      });
       return response.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
@@ -31,9 +37,11 @@ export const googleLoginUser = createAsyncThunk(
   "auth/googleLoginUser",
   async (idToken, { rejectWithValue }) => {
     try {
+      const location = await getUserLocation();
+
       const response = await api.post(
         `/auth/google`,
-        { idToken },
+        { idToken, location },
         { withCredentials: true },
       );
       return response.data;
@@ -60,6 +68,18 @@ export const refreshAuth = createAsyncThunk(
       return response.data;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);
+    }
+  },
+);
+
+export const updateProfile = createAsyncThunk(
+  "auth/updateProfile",
+  async (profileData, { rejectWithValue }) => {
+    try {
+      const response = await api.post(`/auth/profile`, profileData);
+      return response.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
@@ -130,7 +150,20 @@ const authSlice = createSlice({
       .addCase(refreshAuth.rejected, (state) => {
         state.loading = false;
         state.user = null;
+        // state.error = action.payload;
         state.isAuthenticated = false;
+      })
+      // Update Profile
+      .addCase(updateProfile.pending, (state) => {
+        // state.loading = true;
+      })
+      .addCase(updateProfile.fulfilled, (state, action) => {
+        // state.loading = false;
+        state.user = { ...state.user, ...action.payload };
+      })
+      .addCase(updateProfile.rejected, (state) => {
+        // state.loading = false;
+        // state.error = action.payload;
       })
       // Logout
       .addCase(logout.pending, (state) => {

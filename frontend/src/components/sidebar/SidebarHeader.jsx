@@ -10,7 +10,7 @@ const SidebarHeader = ({ onClose }) => {
   return (
     <div className="bg-green-200 rounded p-2 sticky top-0 shadow">
       <div className="flex gap-4 items-center">
-        <Avatar />
+        <Avatar profilePicture={user?.profilePicture} />
         <div className="text-sm flex flex-col">
           <span>{user?.name}</span>
           <span>
