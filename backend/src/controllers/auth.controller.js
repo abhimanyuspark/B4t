@@ -31,7 +31,7 @@ export const googleAuth = async (req, res, next) => {
         provider: "google",
         oauthId: sub,
         isVerified: true,
-        // profileImage: { url: picture },
+        profilePicture: picture,
       };
 
       if (
@@ -200,6 +200,32 @@ export const updateProfile = async (req, res) => {
     }
   } catch (error) {
     console.error("Error during update profile:", error);
+    res.status(500).json({ message: "Internal server error" });
+  }
+};
+
+export const updateUserLocation = async (req, res) => {
+  try {
+    const { location } = req?.body;
+    const userId = req?.user?.id;
+
+    if (!location) {
+      return res.status(400).json({ message: "location is required" });
+    }
+
+    const user = await User.findByIdAndUpdate(
+      userId,
+      { location },
+      { new: true },
+    );
+
+    if (user) {
+      res.status(200).json({ location: user?.location });
+    } else {
+      return res.status(500).json({ message: "Error updating user" });
+    }
+  } catch (error) {
+    console.error("Error during update user location:", error);
     res.status(500).json({ message: "Internal server error" });
   }
 };

@@ -20,7 +20,7 @@ const LanguageSelect = () => {
       text={(opt) => opt?.name}
       options={languages}
       value={option}
-      className="w-30"
+      className="w-23 sm:w-30"
       onChange={handleLanguageChange}
     />
   );

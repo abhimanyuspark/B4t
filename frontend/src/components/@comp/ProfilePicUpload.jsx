@@ -4,14 +4,14 @@ import { useDispatch } from "react-redux";
 import { updateProfile } from "../../redux/features/authSlice";
 import toast from "react-hot-toast";
 
-const ProfilePicUpload = ({ file }) => {
+const Logo =
+  "https://res.cloudinary.com/dyzuf567d/image/upload/v1751211556/Blog/l3fomqurs4jsbc9nd9w4.png";
+
+const ProfilePicUpload = ({ file = Logo }) => {
   const dispatch = useDispatch();
   const [preview, setPreview] = useState(null);
   const [loading, setLoading] = useState(false);
   const inputRef = useRef();
-
-  const Logo =
-    "https://res.cloudinary.com/dyzuf567d/image/upload/v1751211556/Blog/l3fomqurs4jsbc9nd9w4.png";
 
   const handleChange = (e) => {
     const selectedFile = e.target.files[0];
@@ -80,16 +80,14 @@ const ProfilePicUpload = ({ file }) => {
             </button>
           )}
 
-          <div className="border border-primary rounded-full overflow-hidden size-50 loader">
+          <div className="border border-gray-300 rounded-full overflow-hidden size-50 loader">
             {loading ? (
               <div className="flex size-full text-xl items-center justify-center">
                 Uploading...
               </div>
             ) : !preview ? (
               <label className="flex flex-col items-center justify-center w-full h-full cursor-pointer">
-                <span className="text-base-content/50 font-medium mb-2">
-                  Choose Image
-                </span>
+                <span className="text-base font-medium mb-2">Choose Image</span>
                 <input
                   type="file"
                   accept="image/*"
@@ -98,7 +96,7 @@ const ProfilePicUpload = ({ file }) => {
                   className="hidden"
                 />
                 <div className="size-10 flex items-center justify-center bg-base-200 rounded-full">
-                  <FiPlus className="text-3xl text-base-content/80" />
+                  <FiPlus className="text-3xl" />
                 </div>
               </label>
             ) : (
@@ -110,7 +108,7 @@ const ProfilePicUpload = ({ file }) => {
                   className="size-full object-cover"
                 />
                 <label className="text-white group-hover:flex hidden absolute top-0 left-0 flex-col items-center justify-center w-full h-full cursor-pointer bg-black/60 rounded-full">
-                  <span className="text-base-content/50 text-center font-medium mb-2">
+                  <span className="text-base text-center font-medium mb-2">
                     Click for change image
                   </span>
                   <input
@@ -120,8 +118,8 @@ const ProfilePicUpload = ({ file }) => {
                     ref={inputRef}
                     className="hidden"
                   />
-                  <div className="size-12 flex items-center bg-info justify-center rounded-full">
-                    <FiEdit className="text-xl text-info-content" />
+                  <div className="size-12 flex items-center bg-green-600 justify-center rounded-full">
+                    <FiEdit className="text-xl" />
                   </div>
                 </label>
               </div>

@@ -22,7 +22,7 @@ const SidebarHeader = ({ onClose }) => {
       <Link
         onClick={onClose}
         to="/profile"
-        className="text-center block w-full mt-2 p-2 text-sm rounded bg-green-100 hover:bg-green-300 hover:text-white"
+        className="text-center block w-full mt-4 p-2 text-sm rounded bg-green-100 hover:bg-green-300 hover:text-white shadow"
       >
         {t("profile.title")}
       </Link>

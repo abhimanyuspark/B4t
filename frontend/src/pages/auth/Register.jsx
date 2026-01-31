@@ -11,6 +11,7 @@ import GoogleAuthButton from "../../components/@comp/GoogleAuthButton";
 import { useTranslation } from "react-i18next";
 
 const Register = () => {
+  const { location } = useSelector((state) => state.auth);
   const [form, setForm] = useState({ name: "", email: "", password: "" });
   const [errors, setErrors] = useState({});
   const { loading } = useSelector((state) => state.auth);
@@ -32,7 +33,7 @@ const Register = () => {
     }
 
     await toast.promise(
-      dispatch(registerUser(form)).unwrap(),
+      dispatch(registerUser({ ...form, location })).unwrap(),
       {
         loading: "Loading...",
         success: () => {

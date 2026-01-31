@@ -79,6 +79,23 @@ const userSchema = new mongoose.Schema(
       default: false,
     },
 
+    status: {
+      type: String,
+      enum: ["active", "paused"],
+      default: "active",
+    },
+
+    capabilities: {
+      isCareSeeker: { type: Boolean, default: true },
+      isCarer: { type: Boolean, default: true },
+    },
+
+    activeMode: {
+      type: String,
+      enum: ["careSeeker", "carer"],
+      default: "careSeeker",
+    },
+
     travelPreferences: {
       budget: {
         type: String,

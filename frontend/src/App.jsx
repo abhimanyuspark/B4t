@@ -17,7 +17,7 @@ import UserLayout from "./components/layout/UserLayout";
 import { Toaster } from "react-hot-toast";
 import ScrollToTop from "./components/@comp/ScrollToTop";
 import { useDispatch, useSelector } from "react-redux";
-import { refreshAuth } from "./redux/features/authSlice";
+import { getGeoLocation, refreshAuth } from "./redux/features/authSlice";
 import ProtectedRoute from "./components/@comp/ProtectedRoute";
 import Layout from "./components/layout/Layout";
 
@@ -26,6 +26,7 @@ function App() {
   const { loading } = useSelector((state) => state.auth);
 
   useEffect(() => {
+    dispatch(getGeoLocation());
     dispatch(refreshAuth());
   }, [dispatch]);
 

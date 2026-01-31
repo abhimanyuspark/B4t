@@ -1,10 +1,11 @@
 import { GoogleLogin } from "@react-oauth/google";
 import { googleLoginUser } from "../../redux/features/authSlice";
 import toast from "react-hot-toast";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router";
 
 const GoogleAuthButton = () => {
+  const { location } = useSelector((state) => state.auth);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -12,7 +13,7 @@ const GoogleAuthButton = () => {
     const idToken = credentialResponse.credential;
 
     toast.promise(
-      dispatch(googleLoginUser(idToken)).unwrap(),
+      dispatch(googleLoginUser({ idToken, location })).unwrap(),
       {
         loading: "Loading...",
         success: () => {
