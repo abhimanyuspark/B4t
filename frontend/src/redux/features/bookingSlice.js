@@ -1,65 +1,80 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../services/api.js";
+import api from "../../api/api";
 
-/* CARESEEKER */
+/* ------------------ THUNKS ------------------ */
+
+// Create booking (careseeker selects carer)
 export const createBooking = createAsyncThunk(
-  "bookings/create",
-  async (payload) => {
-    const { data } = await api.post("/bookings", payload);
-    return data;
+  "booking/create",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await api.post("/bookings", data);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   },
 );
 
-export const payBooking = createAsyncThunk(
-  "bookings/pay",
-  async (bookingId) => {
-    const { data } = await api.patch(`/bookings/${bookingId}/pay`);
-    return data;
+// Carer accepts booking
+export const acceptBooking = createAsyncThunk(
+  "booking/accept",
+  async (bookingId, { rejectWithValue }) => {
+    try {
+      const res = await api.patch(`/bookings/${bookingId}/accept`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
   },
 );
 
-export const fetchMyBookings = createAsyncThunk("bookings/my", async () => {
-  const { data } = await api.get("/bookings/my");
-  return data;
-});
+// Complete booking
+export const completeBooking = createAsyncThunk(
+  "booking/complete",
+  async (bookingId, { rejectWithValue }) => {
+    try {
+      const res = await api.patch(`/bookings/${bookingId}/complete`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
 
-/* CARER */
-export const fetchOpenBookings = createAsyncThunk("bookings/open", async () => {
-  const { data } = await api.get("/bookings/open");
-  return data;
-});
+/* ------------------ SLICE ------------------ */
 
 const bookingSlice = createSlice({
-  name: "bookings",
+  name: "booking",
   initialState: {
-    list: [],
-    openBookings: [],
     current: null,
     loading: false,
+    error: null,
   },
   reducers: {
-    setCurrentBooking(state, action) {
-      state.current = action.payload;
+    clearBooking(state) {
+      state.current = null;
     },
   },
   extraReducers: (builder) => {
     builder
-
-      .addCase(createBooking.pending, (state, action) => {
+      .addCase(createBooking.pending, (state) => {
         state.loading = true;
       })
       .addCase(createBooking.fulfilled, (state, action) => {
-        state.loading = true;
-        state.list.push(action.payload);
+        state.loading = false;
+        state.current = action.payload;
       })
-      .addCase(fetchMyBookings.fulfilled, (state, action) => {
-        state.list = action.payload;
+      .addCase(createBooking.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload?.message;
       })
-      .addCase(fetchOpenBookings.fulfilled, (state, action) => {
-        state.openBookings = action.payload;
+
+      .addCase(acceptBooking.fulfilled, (state, action) => {
+        state.current = action.payload;
       });
   },
 });
 
-export const { setCurrentBooking } = bookingSlice.actions;
+export const { clearBooking } = bookingSlice.actions;
 export default bookingSlice.reducer;

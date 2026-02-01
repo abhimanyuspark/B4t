@@ -23,12 +23,12 @@ export default function DashboardHome() {
 
       {/* Stats */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-        <StatCard
+        {/* <StatCard
           icon={<FaSuitcaseRolling />}
           title={t("dashboard.stats.trips")}
           value="4"
           color="blue"
-        />
+        /> */}
         <StatCard
           icon={<FaPlane />}
           title={t("dashboard.stats.bookings")}
@@ -50,11 +50,11 @@ export default function DashboardHome() {
         </h2>
 
         <div className="flex flex-wrap gap-4">
-          <QuickAction
+          {/* <QuickAction
             to="/dashboard/create-trip"
             icon={<FaPlusCircle />}
             label={t("dashboard.quick_actions.create_trip")}
-          />
+          /> */}
           <QuickAction
             to="/add-flight"
             icon={<FaPlane />}

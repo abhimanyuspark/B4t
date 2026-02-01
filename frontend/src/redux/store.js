@@ -1,13 +1,15 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authReducer from "./features/authSlice";
 import bookingReducer from "./features/bookingSlice";
-import carerRequestReducer from "./features/carerRequestSlice";
+import travelPlanReducer from "./features/travelPlanSlice";
+import carerAvailabilityReducer from "./features/carerAvailabilitySlice";
 
 const store = configureStore({
   reducer: {
     auth: authReducer,
     bookings: bookingReducer,
-    carerRequests: carerRequestReducer,
+    travelPlan: travelPlanReducer,
+    carerAvailability: carerAvailabilityReducer,
   },
 });
 

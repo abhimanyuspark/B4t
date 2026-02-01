@@ -2,51 +2,36 @@ import mongoose from "mongoose";
 
 const bookingSchema = new mongoose.Schema(
   {
+    travelPlanId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "TravelPlan",
+      required: true,
+    },
+
+    carerAvailabilityId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "CarerAvailability",
+      required: true,
+    },
+
     careseekerId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "User",
       required: true,
     },
 
-    travel: {
-      date: Date,
-      from: String,
-      to: String,
-      flightNumber: String,
-    },
-
-    requirements: {
-      services: [String], // wheelchair, medical, language
-      genderPreference: String,
-      languages: [String],
-    },
-
-    amount: {
-      type: Number,
+    carerId: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
       required: true,
     },
 
-    paymentStatus: {
-      type: String,
-      enum: ["PENDING", "PAID", "REFUNDED"],
-      default: "PENDING",
-    },
+    amount: { type: Number, required: true },
 
-    bookingStatus: {
+    status: {
       type: String,
-      enum: [
-        "OPEN", // waiting for carer requests
-        "CARER_SELECTED",
-        "COMPLETED",
-        "CANCELLED",
-      ],
-      default: "OPEN",
-    },
-
-    selectedCarerId: {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "User",
-      default: null,
+      enum: ["PENDING_CARER_ACCEPTANCE", "CONFIRMED", "REJECTED", "COMPLETED"],
+      default: "PENDING_CARER_ACCEPTANCE",
     },
   },
   { timestamps: true },
