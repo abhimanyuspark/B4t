@@ -15,8 +15,8 @@ const Sidebar = ({ onClose }) => {
 
       <Hr />
 
-      <div className="side-logout-btn *:justify-start!">
-        <SwitchMode onClose={onClose} />
+      <div className="side-logout-btn">
+        <SwitchMode className="justify-start! gap-6!" onClose={onClose} />
       </div>
 
       <Hr />

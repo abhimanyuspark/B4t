@@ -96,6 +96,16 @@ const userSchema = new mongoose.Schema(
       default: "careSeeker",
     },
 
+    wallet: {
+      balance: { type: Number, default: 0 },
+      currency: { type: String, default: "INR" },
+    },
+
+    payout: {
+      upiId: String,
+      isVerified: { type: Boolean, default: false },
+    },
+
     travelPreferences: {
       budget: {
         type: String,

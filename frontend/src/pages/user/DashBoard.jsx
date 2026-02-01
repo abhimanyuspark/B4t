@@ -14,7 +14,7 @@ export default function DashboardHome() {
   const { t } = useTranslation();
 
   return (
-    <Container>
+    <Container className="bg-gray-50!">
       {/* Welcome */}
       <h1 className="text-3xl font-bold text-gray-800 mb-2">
         {t("common.welcome_message")}, {user?.name || "Traveler"} 👋

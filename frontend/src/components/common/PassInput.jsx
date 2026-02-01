@@ -13,6 +13,7 @@ const PassInput = ({ value, onChange, error, ...props }) => {
       <Input
         type={open ? "text" : "password"}
         name="password"
+        label="password"
         value={value}
         onChange={onChange}
         error={error}

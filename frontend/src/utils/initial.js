@@ -2,10 +2,46 @@ import { FaAirbnb, FaHome, FaShoppingBag, FaUsers } from "react-icons/fa";
 import { FcHome, FcSupport } from "react-icons/fc";
 
 export const languages = [
-  { code: "en", name: "English" },
-  { code: "hi", name: "Hindi" },
-  { code: "fr", name: "French" },
-  { code: "de", name: "German" },
+  {
+    code: "en",
+    name: "English",
+    country: "United States",
+    currency: {
+      code: "USD",
+      name: "US Dollar",
+      symbol: "$",
+    },
+  },
+  {
+    code: "hi",
+    name: "Hindi",
+    country: "India",
+    currency: {
+      code: "INR",
+      name: "Indian Rupee",
+      symbol: "₹",
+    },
+  },
+  {
+    code: "fr",
+    name: "French",
+    country: "France",
+    currency: {
+      code: "EUR",
+      name: "Euro",
+      symbol: "€",
+    },
+  },
+  {
+    code: "de",
+    name: "German",
+    country: "Germany",
+    currency: {
+      code: "EUR",
+      name: "Euro",
+      symbol: "€",
+    },
+  },
 ];
 
 export const footerNavigation = [

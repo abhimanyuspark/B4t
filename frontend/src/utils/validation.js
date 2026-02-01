@@ -20,6 +20,43 @@ const validation = (form) => {
       errs.name = "Name is required";
     }
   }
+
+  if ("flightNumber" in form) {
+    if (!form.flightNumber) {
+      errs.flightNumber = "Flight number is required";
+    }
+  }
+
+  if ("date" in form) {
+    if (!form.date) {
+      errs.date = "Date is required";
+    }
+  }
+
+  if ("from" in form) {
+    if (!form.from) {
+      errs.from = "From is required";
+    }
+  }
+
+  if ("to" in form) {
+    if (!form.to) {
+      errs.to = "To is required";
+    }
+  }
+
+  if ("gender" in form) {
+    if (!form.gender) {
+      errs.gender = "Gender is required";
+    }
+  }
+
+  if ("languages" in form) {
+    if (!form.languages || form.languages.length === 0) {
+      errs.languages = "Please select at least one language";
+    }
+  }
+
   return errs;
 };
 

@@ -6,6 +6,12 @@ import {
 } from "react-icons/fa";
 import Container from "../../components/common/Container";
 import { useTranslation } from "react-i18next";
+import { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  fetchMyBookings,
+  fetchOpenBookings,
+} from "../../redux/features/bookingSlice";
 
 const bookings = [
   {
@@ -28,6 +34,13 @@ const bookings = [
 
 export default function Bookings() {
   const { t } = useTranslation();
+  const { list } = useSelector((state) => state.bookings);
+  const dispatch = useDispatch();
+  console.log(list);
+
+  useEffect(() => {
+    dispatch(fetchMyBookings());
+  }, [dispatch]);
 
   return (
     <Container>

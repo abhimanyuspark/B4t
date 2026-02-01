@@ -4,6 +4,7 @@ const Input = ({
   onChange,
   placeholder = "",
   name,
+  label = "",
   className = "",
   error = "",
   ...props
@@ -11,7 +12,7 @@ const Input = ({
   return (
     <div className="flex gap-1 flex-col">
       <label className="text-gray-700 font-medium first-letter:uppercase">
-        {name}
+        {label}
       </label>
 
       <input
@@ -20,7 +21,7 @@ const Input = ({
         onChange={onChange}
         placeholder={placeholder}
         name={name}
-        className={`px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 transition ${className}`}
+        className={`px-4 py-2 border border-gray-300 rounded-md focus:outline-none  transition ${error ? "ring-2 ring-red-500" : "focus:ring-2 focus:ring-green-500"} ${className}`}
         {...props}
       />
 

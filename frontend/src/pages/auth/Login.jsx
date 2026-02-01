@@ -57,6 +57,7 @@ const Login = () => {
         <Input
           type="email"
           name="email"
+          label="email"
           value={form.email}
           onChange={handleChange}
           error={errors.email}

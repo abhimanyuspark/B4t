@@ -1,9 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
-import authSlice from "./features/authSlice";
+import authReducer from "./features/authSlice";
+import bookingReducer from "./features/bookingSlice";
+import carerRequestReducer from "./features/carerRequestSlice";
 
 const store = configureStore({
   reducer: {
-    auth: authSlice,
+    auth: authReducer,
+    bookings: bookingReducer,
+    carerRequests: carerRequestReducer,
   },
 });
 
