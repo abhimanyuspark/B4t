@@ -16,6 +16,8 @@ const travelPlanSchema = new mongoose.Schema(
     flightNumber: String,
 
     servicesNeeded: [String],
+    languages: [String],
+    gender: String,
 
     budget: Number,
 

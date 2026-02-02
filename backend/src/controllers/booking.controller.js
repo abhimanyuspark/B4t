@@ -1,7 +1,7 @@
-import Booking from "../models/Booking.js";
-import TravelPlan from "../models/TravelPlan.js";
-import CarerAvailability from "../models/CarerAvailability.js";
-import User from "../models/User.js";
+import Booking from "../models/booking.model.js";
+import TravelPlan from "../models/travelPlan.model.js";
+import CarerAvailability from "../models/carerAvailability.model.js";
+import User from "../models/user.model.js";
 
 export const createBooking = async (req, res) => {
   const { travelPlanId, carerAvailabilityId } = req.body;
@@ -62,4 +62,18 @@ export const completeBooking = async (req, res) => {
   });
 
   res.json({ success: true });
+};
+
+export const getMyBookings = async (req, res) => {
+  const query =
+    req.user.activeMode === "CARESEEKER"
+      ? { careseekerId: req.user._id }
+      : { carerId: req.user._id };
+
+  const bookings = await Booking.find(query)
+    .populate("travelPlanId")
+    .populate("carerAvailabilityId")
+    .sort({ createdAt: -1 });
+
+  res.json(bookings);
 };

@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../api/api";
+import api from "../services/api";
 
 /* ------------------ THUNKS ------------------ */
 
@@ -42,11 +42,24 @@ export const completeBooking = createAsyncThunk(
   },
 );
 
+export const getMyBookings = createAsyncThunk(
+  "booking/my",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get("/bookings/my");
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
 /* ------------------ SLICE ------------------ */
 
 const bookingSlice = createSlice({
   name: "booking",
   initialState: {
+    list: [],
     current: null,
     loading: false,
     error: null,
@@ -72,6 +85,10 @@ const bookingSlice = createSlice({
 
       .addCase(acceptBooking.fulfilled, (state, action) => {
         state.current = action.payload;
+      })
+
+      .addCase(getMyBookings.fulfilled, (state, action) => {
+        state.list = action.payload;
       });
   },
 });

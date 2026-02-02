@@ -21,3 +21,11 @@ export const markTravelPlanPaid = async (req, res) => {
 
   res.json(plan);
 };
+
+export const getMyTravelPlans = async (req, res) => {
+  const plans = await TravelPlan.find({
+    careseekerId: req.user._id,
+  }).sort({ createdAt: -1 });
+
+  res.json(plans);
+};

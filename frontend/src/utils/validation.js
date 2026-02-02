@@ -27,21 +27,21 @@ const validation = (form) => {
     }
   }
 
-  if ("date" in form) {
-    if (!form.date) {
-      errs.date = "Date is required";
+  if ("departureTime" in form) {
+    if (!form.departureTime) {
+      errs.departureTime = "Date is required";
     }
   }
 
-  if ("from" in form) {
-    if (!form.from) {
-      errs.from = "From is required";
+  if ("origin" in form) {
+    if (!form.origin) {
+      errs.origin = "From is required";
     }
   }
 
-  if ("to" in form) {
-    if (!form.to) {
-      errs.to = "To is required";
+  if ("destination" in form) {
+    if (!form.destination) {
+      errs.destination = "To is required";
     }
   }
 

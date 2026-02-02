@@ -22,7 +22,7 @@ const Select = ({
         onClick={() => setOpen((prev) => !prev)}
         {...props}
       >
-        {text(value)}
+        {text(value) || "Select..."}
       </div>
 
       {open && (

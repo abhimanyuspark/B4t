@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../../api/api";
+import api from "../services/api";
 
 /* ------------------ THUNKS ------------------ */
 
@@ -19,11 +19,22 @@ export const createAvailability = createAsyncThunk(
 // Get matching carers for a travel plan
 export const getMatchingCarers = createAsyncThunk(
   "carerAvailability/match",
-  async (query, { rejectWithValue }) => {
+  async (id, { rejectWithValue }) => {
     try {
-      const res = await api.get("/carer-availabilities/match", {
-        params: query,
-      });
+      const res = await api.get(`/carer-availabilities/match/${id}`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response.data);
+    }
+  },
+);
+
+// Get Carer Availabilities
+export const getMyAvailabilities = createAsyncThunk(
+  "carerAvailability/my",
+  async (_, { rejectWithValue }) => {
+    try {
+      const res = await api.get("/carer-availabilities/my");
       return res.data;
     } catch (err) {
       return rejectWithValue(err.response.data);
@@ -68,6 +79,15 @@ const carerAvailabilitySlice = createSlice({
       .addCase(getMatchingCarers.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message;
+      })
+
+      .addCase(getMyAvailabilities.pending, (state, action) => {
+        state.loading = true;
+      })
+
+      .addCase(getMyAvailabilities.fulfilled, (state, action) => {
+        state.loading = false;
+        state.list = action.payload;
       });
   },
 });

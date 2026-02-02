@@ -5,13 +5,15 @@ import Button from "../../../components/common/Button";
 import Input from "../../../components/common/Input";
 import { useTranslation } from "react-i18next";
 import { toast } from "react-hot-toast";
-import { applyToBooking } from "../../../redux/features/carerRequestSlice";
+import { createAvailability } from "../../../redux/features/carerAvailabilitySlice";
 
 const initialForm = {
-  from: "",
-  to: "",
-  date: "",
+  origin: "",
+  destination: "",
+  // departureTime: "",
   flightNumber: "",
+  availableDate: "",
+  price: 500,
 };
 
 const CarerAdd_Flight = () => {
@@ -19,8 +21,8 @@ const CarerAdd_Flight = () => {
 
   const [form, setForm] = useState(initialForm);
   const [formError, setFormError] = useState({});
+  const { loading } = useSelector((state) => state.carerAvailability);
   const dispatch = useDispatch();
-  const { loading } = useSelector((state) => state.bookings);
 
   const handleChange = (e) => {
     setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,7 +32,7 @@ const CarerAdd_Flight = () => {
   const onSubmit = (e) => {
     e.preventDefault();
 
-    const validationErrors = validation({ ...form, ...prefrence });
+    const validationErrors = validation(form);
 
     if (Object.keys(validationErrors).length > 0) {
       setFormError(validationErrors);
@@ -38,11 +40,7 @@ const CarerAdd_Flight = () => {
     }
 
     toast.promise(
-      dispatch(
-        applyToBooking({
-          travel: form,
-        }),
-      ).unwrap(),
+      dispatch(createAvailability(form)).unwrap(),
       {
         loading: "Loading...",
         success: () => {
@@ -67,28 +65,28 @@ const CarerAdd_Flight = () => {
     >
       <Input
         type="text"
-        value={form.from}
-        name="from"
+        value={form.origin}
+        name="origin"
         label="From"
         placeholder="From"
-        error={formError?.from}
+        error={formError?.origin}
         onChange={handleChange}
       />
       <Input
         type="text"
-        value={form.to}
+        value={form.destination}
         label="To"
-        name="to"
-        error={formError?.to}
+        name="destination"
+        error={formError?.destination}
         placeholder="To"
         onChange={handleChange}
       />
       <Input
-        error={formError?.date}
+        error={formError?.availableDate}
         type="date"
-        value={form.date}
+        value={form.availableDate}
         label="Date"
-        name="date"
+        name="availableDate"
         onChange={handleChange}
       />
       <Input

@@ -1,4 +1,5 @@
 import CarerAvailability from "../models/carerAvailability.model.js";
+import TravelPlan from "../models/travelPlan.model.js";
 
 export const createAvailability = async (req, res) => {
   const availability = await CarerAvailability.create({
@@ -10,21 +11,33 @@ export const createAvailability = async (req, res) => {
 };
 
 export const getMatchingCarers = async (req, res) => {
-  const { origin, destination, travelDate, flightNumber } = req.query;
+  const { planId } = req.params;
+
+  const plan = await TravelPlan.findById(planId);
+  if (!plan) {
+    return res.status(400).json({ message: "Plan id missing" });
+  }
 
   const query = {
-    origin,
-    destination,
-    availableDate: travelDate,
+    origin: plan.origin,
+    destination: plan.destination,
+    availableDate: plan.travelDate,
     status: "ACTIVE",
   };
 
-  if (flightNumber) query.flightNumber = flightNumber;
+  if (plan.flightNumber) query.flightNumber = plan.flightNumber;
 
   const carers = await CarerAvailability.find(query).populate(
     "carerId",
-    "name rating",
+    "name email profilePicture",
   );
-
   res.json(carers);
+};
+
+export const getMyAvailabilities = async (req, res) => {
+  const list = await CarerAvailability.find({
+    carerId: req.user._id,
+  }).sort({ createdAt: -1 });
+
+  res.json(list);
 };
