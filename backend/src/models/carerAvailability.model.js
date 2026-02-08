@@ -17,8 +17,6 @@ const carerAvailabilitySchema = new mongoose.Schema(
 
     servicesOffered: [String],
 
-    price: { type: Number, required: true },
-
     status: {
       type: String,
       enum: ["ACTIVE", "BOOKED", "CANCELLED"],

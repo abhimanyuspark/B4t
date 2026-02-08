@@ -13,7 +13,6 @@ const initialForm = {
   // departureTime: "",
   flightNumber: "",
   availableDate: "",
-  price: 500,
 };
 
 const CarerAdd_Flight = () => {

@@ -9,6 +9,7 @@ import validation from "../../../utils/validation";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { createTravelPlan } from "../../../redux/features/travelPlanSlice";
+import SearchCityInput from "../../../components/@comp/SearchCityInput";
 
 const initialForm = {
   origin: "",
@@ -91,6 +92,7 @@ export default function CareSeekerAdd_Flight() {
         error={formError?.origin}
         onChange={handleChange}
       />
+
       <Input
         type="text"
         value={form.destination}

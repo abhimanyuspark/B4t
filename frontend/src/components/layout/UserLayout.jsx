@@ -13,7 +13,7 @@ const UserLayout = () => {
           <DSidebar />
         </div>
 
-        <div className="flex-1 p-4 overflow-y-auto sm:pl-75">
+        <div className="flex-1 p-4 overflow-y-auto sm:pl-75 inset-shadow-sm inset-shadow-gray-400">
           <Outlet />
         </div>
       </main>

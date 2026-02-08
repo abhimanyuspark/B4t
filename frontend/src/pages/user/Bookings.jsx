@@ -1,8 +1,8 @@
 import Container from "../../components/common/Container";
 import { useTranslation } from "react-i18next";
-import CareSeekerBookings from "./careseeker/CareSeekerBookings";
 import { useSelector } from "react-redux";
-import CarerBookings from "./carer/CarerBookings";
+import CarerShowBookings from "./carer/CarerShowBookings";
+import CareSeekerShowBookings from "./careseeker/CareSeekerShowBookings";
 
 export default function Bookings() {
   const { t } = useTranslation();
@@ -16,9 +16,9 @@ export default function Bookings() {
       </h1>
 
       {user?.activeMode === "careSeeker" ? (
-        <CareSeekerBookings />
+        <CareSeekerShowBookings />
       ) : (
-        <CarerBookings />
+        <CarerShowBookings />
       )}
     </Container>
   );

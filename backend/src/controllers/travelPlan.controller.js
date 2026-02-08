@@ -1,9 +1,17 @@
 import TravelPlan from "../models/travelPlan.model.js";
 
+const PLATFORM_PRICE = 1000;
+const COMMISSION_PERCENT = 20;
+
 export const createTravelPlan = async (req, res) => {
+  const commission = (PLATFORM_PRICE * COMMISSION_PERCENT) / 100;
+
   const plan = await TravelPlan.create({
     ...req.body,
     careseekerId: req.user._id,
+    totalPaid: PLATFORM_PRICE,
+    platformCommission: commission,
+    carerPayout: PLATFORM_PRICE - commission,
   });
 
   res.status(201).json(plan);

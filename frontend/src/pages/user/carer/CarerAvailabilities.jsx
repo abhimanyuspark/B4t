@@ -1,33 +1,23 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { getMyAvailabilities } from "../../../redux/features/carerAvailabilitySlice";
 import { useTranslation } from "react-i18next";
 import PageLoader from "../../../components/common/PageLoader";
 import { FaCalendarAlt, FaPlane } from "react-icons/fa";
 import { formateDate } from "../../../utils/support";
-import { getMyBookings } from "../../../redux/features/bookingSlice";
-import { toast } from "react-hot-toast";
-import { acceptBooking } from "../../../redux/features/bookingSlice";
 
-const CarerBookings = () => {
+const CarerAvailabilities = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
-  const { list, loading } = useSelector((state) => state.bookings);
+  const { list, loading } = useSelector((state) => state.carerAvailability);
 
   useEffect(() => {
-    dispatch(getMyBookings());
+    dispatch(getMyAvailabilities());
   }, [dispatch]);
 
   if (loading) {
     return <PageLoader />;
   }
-
-  const onAccept = (id) => {
-    toast.promise(dispatch(acceptBooking(id)).unwrap(), {
-      loading: "Loading...",
-      success: "Accepted successful",
-      error: (err) => err,
-    });
-  };
 
   return (
     <div className="flex gap-4 flex-col">
@@ -50,12 +40,11 @@ const CarerBookings = () => {
                 {t("bookings.booking_id")}: {booking?._id}
               </p>
               <h3 className="text-lg font-semibold text-gray-800">
-                {booking?.travelPlanId?.origin} →{" "}
-                {booking?.travelPlanId?.destination}
+                {booking?.origin} → {booking?.destination}
               </h3>
               <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
                 <FaCalendarAlt />
-                {formateDate(booking?.travelPlanId?.travelDate)}
+                {formateDate(booking?.availableDate)}
               </div>
             </div>
           </div>
@@ -71,16 +60,6 @@ const CarerBookings = () => {
             >
               {booking?.status}
             </span>
-            {booking?.status !== "CONFIRMED" && (
-              <button
-                onClick={() => {
-                  onAccept(booking?._id);
-                }}
-                className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-base font-medium bg-green-400 text-white cursor-pointer`}
-              >
-                Accept
-              </button>
-            )}
           </div>
         </div>
       ))}
@@ -88,4 +67,4 @@ const CarerBookings = () => {
   );
 };
 
-export default CarerBookings;
+export default CarerAvailabilities;

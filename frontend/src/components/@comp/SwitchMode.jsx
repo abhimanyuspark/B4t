@@ -25,7 +25,11 @@ const SwitchMode = ({ onClose, ...props }) => {
     <button onClick={onSwitchMOde} {...props}>
       <FcBusinessman className="size-6" />
       <p className="first-letter:uppercase text-sm">
-        {loading ? "Switching.." : user?.activeMode}
+        {loading
+          ? "Switching..."
+          : user?.activeMode === "carer"
+            ? "Switch to Care Seeker"
+            : "Switch to Carer"}
       </p>
     </button>
   );

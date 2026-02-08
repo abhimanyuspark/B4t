@@ -19,12 +19,37 @@ const travelPlanSchema = new mongoose.Schema(
     languages: [String],
     gender: String,
 
-    budget: Number,
+    // payment
+    totalPaid: {
+      type: Number,
+      required: true,
+    },
+
+    platformCommission: {
+      type: Number,
+      required: true,
+    },
+
+    carerPayout: {
+      type: Number,
+      required: true,
+    },
 
     paymentStatus: {
       type: String,
-      enum: ["PENDING", "PAID"],
+      enum: ["PENDING", "PAID", "REFUNDED"],
       default: "PENDING",
+    },
+
+    payoutStatus: {
+      type: String,
+      enum: ["HOLD", "RELEASED"],
+      default: "HOLD",
+    },
+
+    isCarerSelected: {
+      type: Boolean,
+      default: false,
     },
 
     status: {

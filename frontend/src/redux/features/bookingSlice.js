@@ -11,7 +11,7 @@ export const createBooking = createAsyncThunk(
       const res = await api.post("/bookings", data);
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
@@ -24,7 +24,7 @@ export const acceptBooking = createAsyncThunk(
       const res = await api.patch(`/bookings/${bookingId}/accept`);
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
@@ -37,7 +37,7 @@ export const completeBooking = createAsyncThunk(
       const res = await api.patch(`/bookings/${bookingId}/complete`);
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
@@ -49,7 +49,7 @@ export const getMyBookings = createAsyncThunk(
       const res = await api.get("/bookings/my");
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
@@ -80,14 +80,22 @@ const bookingSlice = createSlice({
       })
       .addCase(createBooking.rejected, (state, action) => {
         state.loading = false;
-        state.error = action.payload?.message;
+        state.error = action.payload;
       })
 
       .addCase(acceptBooking.fulfilled, (state, action) => {
-        state.current = action.payload;
+        const item = state.list.find((l) => l._id === action.payload._id);
+
+        if (item) {
+          item.status = action.payload.status;
+        }
       })
 
+      .addCase(getMyBookings.pending, (state, action) => {
+        state.loading = true;
+      })
       .addCase(getMyBookings.fulfilled, (state, action) => {
+        state.loading = false;
         state.list = action.payload;
       });
   },

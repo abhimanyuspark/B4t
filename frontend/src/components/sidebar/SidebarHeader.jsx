@@ -13,9 +13,15 @@ const SidebarHeader = ({ onClose }) => {
         <Avatar profilePicture={user?.profilePicture} />
         <div className="text-sm flex flex-col">
           <span>{user?.name}</span>
-          <span>
-            {user?.age || 20} {t("profile.age")}
-          </span>
+          <div className="flex gap-4 items-center">
+            <span>
+              {user?.age || 20} {t("profile.age")}
+            </span>
+            <span className="font-medium text-green-500">
+              Mode :{" "}
+              {user?.activeMode === "careSeeker" ? "Care Seeker" : "Carer"}
+            </span>
+          </div>
         </div>
       </div>
 

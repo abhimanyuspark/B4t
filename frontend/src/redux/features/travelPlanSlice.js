@@ -56,6 +56,13 @@ const travelPlanSlice = createSlice({
     clearTravelPlan(state) {
       state.currentPlan = null;
     },
+    setCarerSelected(state, action) {
+      const item = state.list.find((l) => l._id === action.payload._id);
+
+      if (item) {
+        item.isCarerSelected = true;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -72,7 +79,11 @@ const travelPlanSlice = createSlice({
       })
 
       .addCase(payTravelPlan.fulfilled, (state, action) => {
-        state.currentPlan = action.payload;
+        const item = state.list.find((l) => l._id === action.payload._id);
+
+        if (item) {
+          item.paymentStatus = action.payload.paymentStatus;
+        }
       })
 
       .addCase(getMyTravelPlans.pending, (state, action) => {
@@ -85,5 +96,5 @@ const travelPlanSlice = createSlice({
   },
 });
 
-export const { clearTravelPlan } = travelPlanSlice.actions;
+export const { clearTravelPlan, setCarerSelected } = travelPlanSlice.actions;
 export default travelPlanSlice.reducer;

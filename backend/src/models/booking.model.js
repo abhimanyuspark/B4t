@@ -26,7 +26,21 @@ const bookingSchema = new mongoose.Schema(
       required: true,
     },
 
-    amount: { type: Number, required: true },
+    // payment
+    totalPaid: {
+      type: Number,
+      required: true,
+    },
+
+    platformCommission: {
+      type: Number,
+      required: true,
+    },
+
+    carerPayout: {
+      type: Number,
+      required: true,
+    },
 
     status: {
       type: String,

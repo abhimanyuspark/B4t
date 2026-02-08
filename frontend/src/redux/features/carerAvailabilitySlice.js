@@ -55,6 +55,9 @@ const carerAvailabilitySlice = createSlice({
     clearMatchingCarers(state) {
       state.list = [];
     },
+    setList(state, action) {
+      state.list = state.list.filter((l) => l._id !== action.payload._id);
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -71,6 +74,7 @@ const carerAvailabilitySlice = createSlice({
 
       .addCase(getMatchingCarers.pending, (state) => {
         state.loading = true;
+        state.list = [];
       })
       .addCase(getMatchingCarers.fulfilled, (state, action) => {
         state.loading = false;
@@ -92,5 +96,5 @@ const carerAvailabilitySlice = createSlice({
   },
 });
 
-export const { clearMatchingCarers } = carerAvailabilitySlice.actions;
+export const { clearMatchingCarers, setList } = carerAvailabilitySlice.actions;
 export default carerAvailabilitySlice.reducer;

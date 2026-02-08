@@ -19,8 +19,16 @@ export const createBooking = async (req, res) => {
     carerAvailabilityId,
     careseekerId: plan.careseekerId,
     carerId: availability.carerId,
-    amount: availability.price,
+    totalPaid: plan.totalPaid,
+    platformCommission: plan.platformCommission,
+    carerPayout: plan.carerPayout,
   });
+
+  availability.status = "BOOKED";
+  await availability.save();
+
+  plan.isCarerSelected = true;
+  await plan.save();
 
   res.status(201).json(booking);
 };
@@ -34,10 +42,6 @@ export const acceptBooking = async (req, res) => {
 
   booking.status = "CONFIRMED";
   await booking.save();
-
-  await CarerAvailability.findByIdAndUpdate(booking.carerAvailabilityId, {
-    status: "BOOKED",
-  });
 
   await TravelPlan.findByIdAndUpdate(booking.travelPlanId, {
     status: "MATCHED",
@@ -54,7 +58,7 @@ export const completeBooking = async (req, res) => {
   await booking.save();
 
   const carer = await User.findById(booking.carerId);
-  carer.wallet.balance += booking.amount;
+  carer.wallet.balance += booking.carerPayout;
   await carer.save();
 
   await TravelPlan.findByIdAndUpdate(booking.travelPlanId, {
