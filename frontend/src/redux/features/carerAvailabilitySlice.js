@@ -58,6 +58,13 @@ const carerAvailabilitySlice = createSlice({
     setList(state, action) {
       state.list = state.list.filter((l) => l._id !== action.payload._id);
     },
+    setCarerAvailabilityStatus(state, action) {
+      const item = state.list.find((l) => l._id === action.payload.id);
+
+      if (item) {
+        item.status = action.payload.status;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -96,5 +103,6 @@ const carerAvailabilitySlice = createSlice({
   },
 });
 
-export const { clearMatchingCarers, setList } = carerAvailabilitySlice.actions;
+export const { clearMatchingCarers, setList, setCarerAvailabilityStatus } =
+  carerAvailabilitySlice.actions;
 export default carerAvailabilitySlice.reducer;

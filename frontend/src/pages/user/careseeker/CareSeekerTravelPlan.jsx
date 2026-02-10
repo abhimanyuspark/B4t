@@ -13,9 +13,11 @@ import { formateDate } from "../../../utils/support";
 import {
   getMyTravelPlans,
   payTravelPlan,
+  setTravelPlanStatus,
 } from "../../../redux/features/travelPlanSlice";
 import MatchingCarers from "./MatchingCarers";
 import { toast } from "react-hot-toast";
+import { useSocket } from "../../../redux/context/SocketContext";
 
 const STATUS_UI = {
   OPEN: {
@@ -40,6 +42,7 @@ const CareSeekerTravelPlan = () => {
   const { t } = useTranslation();
   const { list, loading } = useSelector((state) => state.travelPlan);
   const dispatch = useDispatch();
+  const socket = useSocket();
 
   const pay = (t) => {
     toast.promise(dispatch(payTravelPlan(t?._id)).unwrap(), {
@@ -52,6 +55,17 @@ const CareSeekerTravelPlan = () => {
   useEffect(() => {
     dispatch(getMyTravelPlans());
   }, [dispatch]);
+
+  useEffect(() => {
+    socket.on("updateTravelPlanStatus", (data) => {
+      toast.success("Travel Plan Status Updated");
+      dispatch(setTravelPlanStatus(data));
+    });
+
+    return () => {
+      socket.off("updateTravelPlanStatus");
+    };
+  }, []);
 
   if (loading) {
     return <PageLoader />;

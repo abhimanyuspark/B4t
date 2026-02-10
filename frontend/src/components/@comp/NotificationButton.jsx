@@ -5,7 +5,7 @@ const NotificationButton = () => {
   return (
     <Link
       to="/notification"
-      className="px-2 py-2.5 border block rounded-lg border-gray-300 text-sm"
+      className="px-2 py-2 border block rounded-md border-gray-300 text-sm"
     >
       <FaRegBell className="text-xl" />
     </Link>

@@ -1,19 +1,36 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMyAvailabilities } from "../../../redux/features/carerAvailabilitySlice";
+import {
+  getMyAvailabilities,
+  setCarerAvailabilityStatus,
+} from "../../../redux/features/carerAvailabilitySlice";
 import { useTranslation } from "react-i18next";
 import PageLoader from "../../../components/common/PageLoader";
 import { FaCalendarAlt, FaPlane } from "react-icons/fa";
 import { formateDate } from "../../../utils/support";
+import { useSocket } from "../../../redux/context/SocketContext";
+import { toast } from "react-hot-toast";
 
 const CarerAvailabilities = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { list, loading } = useSelector((state) => state.carerAvailability);
+  const socket = useSocket();
 
   useEffect(() => {
     dispatch(getMyAvailabilities());
   }, [dispatch]);
+
+  useEffect(() => {
+    socket.on("updateAvailabilityStatus", (data) => {
+      toast.success("Carer Availability Status Updated");
+      dispatch(setCarerAvailabilityStatus(data));
+    });
+
+    return () => {
+      socket.off("updateAvailabilityStatus");
+    };
+  }, []);
 
   if (loading) {
     return <PageLoader />;

@@ -63,6 +63,13 @@ const travelPlanSlice = createSlice({
         item.isCarerSelected = true;
       }
     },
+    setTravelPlanStatus(state, action) {
+      const item = state.list.find((l) => l._id === action.payload.id);
+
+      if (item) {
+        item.status = action.payload.status;
+      }
+    },
   },
   extraReducers: (builder) => {
     builder
@@ -96,5 +103,6 @@ const travelPlanSlice = createSlice({
   },
 });
 
-export const { clearTravelPlan, setCarerSelected } = travelPlanSlice.actions;
+export const { clearTravelPlan, setCarerSelected, setTravelPlanStatus } =
+  travelPlanSlice.actions;
 export default travelPlanSlice.reducer;

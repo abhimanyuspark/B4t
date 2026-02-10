@@ -2,6 +2,7 @@ import Booking from "../models/booking.model.js";
 import TravelPlan from "../models/travelPlan.model.js";
 import CarerAvailability from "../models/carerAvailability.model.js";
 import User from "../models/user.model.js";
+import { io } from "../config/socket.js";
 
 export const createBooking = async (req, res) => {
   const { travelPlanId, carerAvailabilityId } = req.body;
@@ -27,6 +28,11 @@ export const createBooking = async (req, res) => {
   availability.status = "BOOKED";
   await availability.save();
 
+  io.emit("updateAvailabilityStatus", {
+    id: carerAvailabilityId,
+    status: "BOOKED",
+  });
+
   plan.isCarerSelected = true;
   await plan.save();
 
@@ -43,7 +49,17 @@ export const acceptBooking = async (req, res) => {
   booking.status = "CONFIRMED";
   await booking.save();
 
+  io.emit("updateBookingStatus", {
+    id: booking._id,
+    status: "CONFIRMED",
+  });
+
   await TravelPlan.findByIdAndUpdate(booking.travelPlanId, {
+    status: "MATCHED",
+  });
+
+  io.emit("updateTravelPlanStatus", {
+    id: booking.travelPlanId,
     status: "MATCHED",
   });
 

@@ -14,79 +14,101 @@ import Avatar from "../../../components/@comp/Avatar";
 
 export default function MatchingCarers({ travelPlan }) {
   const dispatch = useDispatch();
-  // const [user, setUser] = useState({});
   const [open, setOpen] = useState(false);
 
   const { list, loading } = useSelector((state) => state.carerAvailability);
 
+  /* ===========================
+     FETCH CARERS WHEN OPEN
+  ============================ */
   useEffect(() => {
-    if (!travelPlan) return;
-    // if (list?.length > 0) return;
+    if (!open) return;
+    if (!travelPlan?._id) return;
 
-    dispatch(getMatchingCarers(travelPlan?._id));
-  }, [travelPlan, dispatch]);
+    dispatch(getMatchingCarers(travelPlan._id));
+  }, [open, travelPlan, dispatch]);
 
-  const onChange = (e) => {
+  /* ===========================
+     CLEAR LIST WHEN CLOSED
+  ============================ */
+  useEffect(() => {
+    if (!open) {
+      dispatch(setList([]));
+    }
+  }, [open, dispatch]);
+
+  /* ===========================
+     SELECT CARER & BOOK
+  ============================ */
+  const onChange = (carerAvailability) => {
     setOpen(false);
+
     toast.promise(
       dispatch(
         createBooking({
           travelPlanId: travelPlan?._id,
-          carerAvailabilityId: e._id,
+          carerAvailabilityId: carerAvailability._id,
         }),
       ).unwrap(),
       {
         loading: "Booking...",
-        success: "Booking Succesful",
+        success: "Booking Successful",
         error: (err) => err,
       },
     );
+
     dispatch(setCarerSelected({ _id: travelPlan?._id }));
-    dispatch(setList({ _id: e._id }));
+    dispatch(setList({ _id: carerAvailability._id }));
   };
 
   return (
     <div>
+      {/* OPEN BUTTON */}
       <p
-        onClick={() => setOpen(!open)}
+        onClick={() => setOpen(true)}
         className="px-4 py-1 font-medium text-gray-500 border border-gray-200 rounded-full hover:bg-gray-300 cursor-pointer"
       >
         Select Carer
       </p>
 
+      {/* OVERLAY */}
       <div
-        style={{
-          right: open ? "0" : "-100%",
-        }}
-        onClick={() => {
-          setOpen(false);
-        }}
+        style={{ right: open ? "0" : "-100%" }}
+        onClick={() => setOpen(false)}
         className="fixed top-0 transition-all size-full pt-0 sm:pt-16.5 z-50 flex justify-end"
       >
+        {/* DRAWER */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className="h-full overflow-auto z-50 w-80 bg-white shadow-2xl border border-gray-300 flex gap-2 flex-col p-2"
+          className="h-full overflow-auto w-80 bg-white shadow-2xl border border-gray-300 flex flex-col gap-2 p-2"
         >
           <h1 className="text-2xl font-semibold">Available Carers</h1>
 
           <Hr />
 
+          {/* LOADING */}
           {loading && (
             <div className="flex items-center justify-center size-full">
               <Loading />
             </div>
           )}
 
+          {/* EMPTY */}
           {!loading && list?.length === 0 && (
-            <div className="flex items-center justify-center size-full">
+            <div className="flex items-center justify-center size-full text-gray-400">
               -- No data found --
             </div>
           )}
 
+          {/* LIST */}
           {!loading &&
             list?.length > 0 &&
-            list.map((l, index) => (
-              <FlightCard key={index} flight={l} onChange={() => onChange(l)} />
+            list.map((item) => (
+              <CarerCard
+                key={item._id}
+                carer={item}
+                onSelect={() => onChange(item)}
+              />
             ))}
         </div>
       </div>
@@ -94,59 +116,53 @@ export default function MatchingCarers({ travelPlan }) {
   );
 }
 
-function FlightCard({ flight, onChange }) {
+/* ===========================
+   CARER CARD
+=========================== */
+function CarerCard({ carer, onSelect }) {
   return (
     <div
-      onClick={onChange}
+      onClick={onSelect}
       className="bg-white rounded-lg shadow p-4 flex gap-4 items-start hover:shadow-md hover:bg-gray-100 cursor-pointer transition"
     >
-      {/* Profile Image */}
-      {/* <img
-        src={flight?.carerId?.profilePicture}
-        alt={flight?.carerId?.name}
-        className="w-14 h-14 rounded-full object-cover border"
-      /> */}
-      <Avatar size={50} profilePicture={flight?.carerId?.profilePicture} />
+      <Avatar size={60} profilePicture={carer?.carerId?.profilePicture} />
 
-      {/* Main Info */}
       <div className="flex-1">
+        {/* HEADER */}
         <div className="flex items-center justify-between">
           <div>
             <h3 className="font-semibold text-gray-800">
-              {flight?.carerId?.name}
+              {carer?.carerId?.name}
             </h3>
-            <p className="text-xs text-gray-500">{flight?.carerId?.email}</p>
+            <p className="text-xs text-gray-500">{carer?.carerId?.email}</p>
           </div>
 
-          {/* Status */}
           <span
             className={`px-3 py-1 text-xs rounded-full font-medium ${
-              flight?.status === "ACTIVE"
+              carer?.status === "ACTIVE"
                 ? "bg-green-100 text-green-700"
                 : "bg-gray-100 text-gray-600"
             }`}
           >
-            {flight?.status}
+            {carer?.status}
           </span>
         </div>
 
-        {/* Route */}
+        {/* ROUTE */}
         <div className="flex items-center gap-2 text-sm text-gray-600 mt-2">
           <FaPlaneDeparture />
-          <span>{flight?.origin}</span>
+          <span>{carer?.origin}</span>
           <span className="text-gray-400">→</span>
-          <span>{flight?.destination}</span>
+          <span>{carer?.destination}</span>
           <span className="text-xs text-gray-400 ml-2">
-            ({flight?.flightNumber})
+            ({carer?.flightNumber})
           </span>
         </div>
 
-        {/* Footer */}
-        <div className="flex flex-wrap gap-4 mt-2 text-sm text-gray-500">
-          <div className="flex items-center gap-1">
-            <FaCalendarAlt />
-            {new Date(flight?.availableDate).toLocaleDateString()}
-          </div>
+        {/* DATE */}
+        <div className="flex items-center gap-1 mt-2 text-sm text-gray-500">
+          <FaCalendarAlt />
+          {new Date(carer?.availableDate).toLocaleDateString()}
         </div>
       </div>
     </div>

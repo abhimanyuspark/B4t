@@ -4,16 +4,33 @@ import { useTranslation } from "react-i18next";
 import PageLoader from "../../../components/common/PageLoader";
 import { FaCalendarAlt, FaPlane } from "react-icons/fa";
 import { formateDate } from "../../../utils/support";
-import { getMyBookings } from "../../../redux/features/bookingSlice";
+import {
+  getMyBookings,
+  setBookingStatus,
+} from "../../../redux/features/bookingSlice";
+import { useSocket } from "../../../redux/context/SocketContext";
+import { toast } from "react-hot-toast";
 
 const CareSeekerBookings = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
   const { list, loading } = useSelector((state) => state.bookings);
+  const socket = useSocket();
 
   useEffect(() => {
     dispatch(getMyBookings());
   }, [dispatch]);
+
+  useEffect(() => {
+    socket.on("updateBookingStatus", (data) => {
+      toast.success("Booking Status Updated");
+      dispatch(setBookingStatus(data));
+    });
+
+    return () => {
+      socket.off("updateBookingStatus");
+    };
+  }, []);
 
   if (loading) {
     return <PageLoader />;
