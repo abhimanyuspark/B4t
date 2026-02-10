@@ -40,7 +40,7 @@ const CarerBookings = () => {
       {list.map((booking) => (
         <div
           key={booking?._id}
-          className="bg-white shadow rounded-lg p-6 flex flex-col md:flex-row md:items-center md:justify-between"
+          className="bg-green-300 shadow rounded-lg p-6 flex flex-col md:flex-row md:items-center md:justify-between"
         >
           {/* Left */}
           <div className="flex items-start gap-4">

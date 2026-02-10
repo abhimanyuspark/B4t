@@ -5,6 +5,7 @@ import LanguageSelect from "../@comp/LanguageSelect";
 import MSidebar from "../sidebar/MSidebar";
 import { FaPlaneDeparture } from "react-icons/fa";
 import Location from "../@comp/Location";
+import NotificationButton from "../@comp/NotificationButton";
 
 const NavBar = () => {
   return (
@@ -33,6 +34,9 @@ const NavContent = () => {
             </li>
             <li>
               <LanguageSelect />
+            </li>
+            <li>
+              <NotificationButton />
             </li>
           </ul>
         ) : (

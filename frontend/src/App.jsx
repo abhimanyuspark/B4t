@@ -6,6 +6,7 @@ import {
   DashBoard,
   Login,
   NotFound,
+  Notification,
   Profile,
   Register,
   Support,
@@ -49,6 +50,7 @@ function App() {
               <Route path="/add-flight" element={<Add_Flight />} />
               <Route path="/bookings" element={<Bookings />} />
               <Route path="/support" element={<Support />} />
+              <Route path="/notification" element={<Notification />} />
             </Route>
 
             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>

@@ -10,9 +10,12 @@ import cors from "cors";
 import corsOptions from "./config/cors.js";
 import connectDB from "./config/mongoDB.js";
 import dotenv from "dotenv";
+
+import { app, server } from "./config/socket.js";
+
 dotenv.config({ quiet: true });
 
-const app = express();
+// const app = express();
 
 app.use(cors(corsOptions));
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
@@ -27,7 +30,7 @@ app.use("/api/carer-availabilities", carerAvailabilityRoutes);
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
-  app.listen(PORT, () => {
+  server.listen(PORT, () => {
     console.log(`Server running on port http://localhost:${PORT}`);
   });
 });

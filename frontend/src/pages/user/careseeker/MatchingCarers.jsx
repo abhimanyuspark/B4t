@@ -10,6 +10,7 @@ import { FaPlaneDeparture, FaCalendarAlt } from "react-icons/fa";
 import Hr from "../../../components/common/Hr";
 import { createBooking } from "../../../redux/features/bookingSlice";
 import { setCarerSelected } from "../../../redux/features/travelPlanSlice";
+import Avatar from "../../../components/@comp/Avatar";
 
 export default function MatchingCarers({ travelPlan }) {
   const dispatch = useDispatch();
@@ -100,11 +101,12 @@ function FlightCard({ flight, onChange }) {
       className="bg-white rounded-lg shadow p-4 flex gap-4 items-start hover:shadow-md hover:bg-gray-100 cursor-pointer transition"
     >
       {/* Profile Image */}
-      <img
+      {/* <img
         src={flight?.carerId?.profilePicture}
         alt={flight?.carerId?.name}
         className="w-14 h-14 rounded-full object-cover border"
-      />
+      /> */}
+      <Avatar size={50} profilePicture={flight?.carerId?.profilePicture} />
 
       {/* Main Info */}
       <div className="flex-1">

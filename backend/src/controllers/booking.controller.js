@@ -70,7 +70,7 @@ export const completeBooking = async (req, res) => {
 
 export const getMyBookings = async (req, res) => {
   const query =
-    req.user.activeMode === "CARESEEKER"
+    req.user.activeMode === "careSeeker"
       ? { careseekerId: req.user._id }
       : { carerId: req.user._id };
 

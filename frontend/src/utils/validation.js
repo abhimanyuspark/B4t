@@ -1,5 +1,6 @@
 const validation = (form) => {
   const errs = {};
+
   if ("email" in form) {
     if (!form.email) {
       errs.email = "Email is required";
@@ -7,6 +8,7 @@ const validation = (form) => {
       errs.email = "Invalid email address";
     }
   }
+
   if ("password" in form) {
     if (!form.password) {
       errs.password = "Password is required";
@@ -15,6 +17,7 @@ const validation = (form) => {
         "Password must be at least 6 characters and at most 10 characters";
     }
   }
+
   if ("name" in form) {
     if (!form.name) {
       errs.name = "Name is required";
@@ -27,9 +30,15 @@ const validation = (form) => {
     }
   }
 
-  if ("departureTime" in form) {
-    if (!form.departureTime) {
-      errs.departureTime = "Date is required";
+  if ("travelDate" in form) {
+    if (!form.travelDate) {
+      errs.travelDate = "Date is required";
+    }
+  }
+
+  if ("availableDate" in form) {
+    if (!form.availableDate) {
+      errs.availableDate = "Date is required";
     }
   }
 
