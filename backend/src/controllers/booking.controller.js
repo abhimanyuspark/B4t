@@ -93,6 +93,8 @@ export const getMyBookings = async (req, res) => {
   const bookings = await Booking.find(query)
     .populate("travelPlanId")
     .populate("carerAvailabilityId")
+    .populate("careseekerId")
+    .populate("carerId")
     .sort({ createdAt: -1 });
 
   res.json(bookings);

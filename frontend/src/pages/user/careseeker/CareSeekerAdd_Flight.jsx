@@ -29,7 +29,6 @@ export default function CareSeekerAdd_Flight() {
   const { loading } = useSelector((state) => state.bookings);
 
   const [form, setForm] = useState(initialForm);
-  // const [amount, setAmount] = useState(0);
   const [formError, setFormError] = useState({});
   const [prefrence, setPrefrence] = useState(initialPreference);
 
@@ -67,7 +66,6 @@ export default function CareSeekerAdd_Flight() {
         { position: "top-center" },
       );
 
-      // ✅ NEW STRIPE WAY
       window.location.href = result.url;
     } catch (error) {
       console.error(error);
@@ -89,7 +87,6 @@ export default function CareSeekerAdd_Flight() {
         error={formError?.origin}
         onChange={handleChange}
       />
-
       <Input
         type="text"
         value={form.destination}

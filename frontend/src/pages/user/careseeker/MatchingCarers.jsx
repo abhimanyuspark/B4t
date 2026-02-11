@@ -18,9 +18,6 @@ export default function MatchingCarers({ travelPlan }) {
 
   const { list, loading } = useSelector((state) => state.carerAvailability);
 
-  /* ===========================
-     FETCH CARERS WHEN OPEN
-  ============================ */
   useEffect(() => {
     if (!open) return;
     if (!travelPlan?._id) return;
@@ -28,18 +25,12 @@ export default function MatchingCarers({ travelPlan }) {
     dispatch(getMatchingCarers(travelPlan._id));
   }, [open, travelPlan, dispatch]);
 
-  /* ===========================
-     CLEAR LIST WHEN CLOSED
-  ============================ */
   useEffect(() => {
     if (!open) {
       dispatch(setList([]));
     }
   }, [open, dispatch]);
 
-  /* ===========================
-     SELECT CARER & BOOK
-  ============================ */
   const onChange = (carerAvailability) => {
     setOpen(false);
 
@@ -116,9 +107,6 @@ export default function MatchingCarers({ travelPlan }) {
   );
 }
 
-/* ===========================
-   CARER CARD
-=========================== */
 function CarerCard({ carer, onSelect }) {
   return (
     <div

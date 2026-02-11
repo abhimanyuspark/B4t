@@ -2,14 +2,26 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import PageLoader from "../../../components/common/PageLoader";
-import { FaCalendarAlt, FaPlane } from "react-icons/fa";
+import {
+  FaCalendarAlt,
+  FaPlaneDeparture,
+  FaPlaneArrival,
+  FaComments,
+  FaCheckCircle,
+} from "react-icons/fa";
+import { IoAirplane } from "react-icons/io5";
 import { formateDate } from "../../../utils/support";
-import { getMyBookings } from "../../../redux/features/bookingSlice";
+import {
+  getMyBookings,
+  acceptBooking,
+} from "../../../redux/features/bookingSlice";
 import { toast } from "react-hot-toast";
-import { acceptBooking } from "../../../redux/features/bookingSlice";
+import { useNavigate } from "react-router";
+import Avatar from "../../../components/@comp/Avatar";
 
 const CarerBookings = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { t } = useTranslation();
   const { list, loading } = useSelector((state) => state.bookings);
 
@@ -17,70 +29,121 @@ const CarerBookings = () => {
     dispatch(getMyBookings());
   }, [dispatch]);
 
-  if (loading) {
-    return <PageLoader />;
-  }
+  if (loading) return <PageLoader />;
 
   const onAccept = (id) => {
     toast.promise(dispatch(acceptBooking(id)).unwrap(), {
-      loading: "Loading...",
-      success: "Accepted successful",
+      loading: "Accepting booking...",
+      success: "Booking accepted successfully",
       error: (err) => err,
     });
   };
 
+  const openChat = (booking) => {
+    navigate(`/chat/${booking._id}`, {
+      state: {
+        careSeeker: booking?.careseekerId?._id,
+      },
+    });
+  };
+
   return (
-    <div className="flex gap-4 flex-col">
+    <div className="flex flex-col gap-6">
       {list?.length === 0 && (
-        <div className="bg-white rounded shadow p-10 text-center">
-          <p className="text-gray-600">{t("bookings.no_bookings")}</p>
+        <div className="bg-white rounded-xl shadow p-10 text-center">
+          <p className="text-gray-600 text-lg">{t("bookings.no_bookings")}</p>
         </div>
       )}
 
-      {list.map((booking) => (
+      {list?.map((booking) => (
         <div
           key={booking?._id}
-          className="bg-green-300 shadow rounded-lg p-6 flex flex-col md:flex-row md:items-center md:justify-between"
+          className="w-full bg-green-300 rounded-md shadow hover:shadow-xl transition-all duration-300 p-6"
         >
-          {/* Left */}
-          <div className="flex items-start gap-4">
-            <FaPlane className="text-blue-600 text-2xl mt-1" />
-            <div>
-              <p className="text-sm text-gray-500">
+          <div className="flex flex-col justify-between gap-6">
+            {/* LEFT SECTION */}
+            <div className="flex flex-col gap-4 flex-1">
+              {/* Booking ID */}
+              <p className="text-green-700">
                 {t("bookings.booking_id")}: {booking?._id}
               </p>
-              <h3 className="text-lg font-semibold text-gray-800">
-                {booking?.travelPlanId?.origin} →{" "}
-                {booking?.travelPlanId?.destination}
-              </h3>
-              <div className="flex items-center gap-2 text-sm text-gray-600 mt-1">
+
+              {/* Route */}
+              <div className="flex items-center justify-between p-4 text-lg font-semibold text-gray-800">
+                <div className="text-2xl flex items-center flex-col">
+                  <FaPlaneDeparture className="text-gray-500 text-4xl" />
+                  <span>{booking?.travelPlanId?.origin}</span>
+                </div>
+
+                <span className="text-5xl">
+                  <IoAirplane />
+                </span>
+
+                <div className="text-2xl flex items-center flex-col">
+                  <FaPlaneArrival className="text-gray-500 text-4xl" />
+                  <span>{booking?.travelPlanId?.destination}</span>
+                </div>
+              </div>
+
+              {/* Date */}
+              <div className="flex items-center gap-2 text-gray-600">
                 <FaCalendarAlt />
                 {formateDate(booking?.travelPlanId?.travelDate)}
               </div>
-            </div>
-          </div>
 
-          {/* Right */}
-          <div className="flex flex-col md:items-end gap-3 mt-4 md:mt-0">
-            <span
-              className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
-                booking?.status === "OPEN"
-                  ? "bg-gray-100 text-gray-600"
-                  : "bg-green-100 text-green-600"
-              }`}
-            >
-              {booking?.status}
-            </span>
-            {booking?.status !== "CONFIRMED" && (
-              <button
-                onClick={() => {
-                  onAccept(booking?._id);
-                }}
-                className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-base font-medium bg-green-400 text-white cursor-pointer`}
+              {/* Careseeker Info */}
+              <div className="flex items-center gap-3 mt-2">
+                <Avatar
+                  size={50}
+                  profilePicture={booking?.careseekerId?.profilePicture}
+                />
+                <div>
+                  <p className="font-medium text-gray-800">
+                    {booking?.careseekerId?.name}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    {booking?.careseekerId?.email}
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            {/* RIGHT SECTION */}
+            <div className="flex items-center justify-between gap-4">
+              {/* Status */}
+              <span
+                className={`px-4 py-1 rounded-full text-sm font-semibold ${
+                  booking?.status === "OPEN"
+                    ? "bg-yellow-100 text-yellow-700"
+                    : booking?.status === "CONFIRMED"
+                      ? "bg-green-100 text-green-700"
+                      : "bg-gray-100 text-gray-600"
+                }`}
               >
-                Accept
-              </button>
-            )}
+                {booking?.status}
+              </span>
+
+              {/* Action Buttons */}
+              <div className="flex gap-3">
+                {booking?.status !== "CONFIRMED" && (
+                  <button
+                    onClick={() => onAccept(booking?._id)}
+                    className="px-4 py-1 rounded-full flex gap-2 items-center text-green-700 bg-green-100 font-semibold cursor-pointer"
+                  >
+                    <FaCheckCircle />
+                    Accept
+                  </button>
+                )}
+
+                <button
+                  onClick={() => openChat(booking)}
+                  className="px-4 py-1 rounded-full flex gap-2 items-center text-green-700 bg-green-100 font-semibold cursor-pointer"
+                >
+                  <FaComments />
+                  Chat
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       ))}

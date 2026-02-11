@@ -10,7 +10,6 @@ import { createAvailability } from "../../../redux/features/carerAvailabilitySli
 const initialForm = {
   origin: "",
   destination: "",
-  // departureTime: "",
   flightNumber: "",
   availableDate: "",
 };
