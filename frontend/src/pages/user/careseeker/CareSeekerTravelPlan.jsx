@@ -12,7 +12,6 @@ import PageLoader from "../../../components/common/PageLoader";
 import { formateDate } from "../../../utils/support";
 import {
   getMyTravelPlans,
-  payTravelPlan,
   setTravelPlanStatus,
 } from "../../../redux/features/travelPlanSlice";
 import MatchingCarers from "./MatchingCarers";
@@ -43,14 +42,6 @@ const CareSeekerTravelPlan = () => {
   const { list, loading } = useSelector((state) => state.travelPlan);
   const dispatch = useDispatch();
   const socket = useSocket();
-
-  const pay = (t) => {
-    toast.promise(dispatch(payTravelPlan(t?._id)).unwrap(), {
-      loading: "Loading...",
-      success: "Sucessful",
-      error: (err) => err,
-    });
-  };
 
   useEffect(() => {
     dispatch(getMyTravelPlans());
@@ -119,18 +110,6 @@ const CareSeekerTravelPlan = () => {
                   travel.isCarerSelected === false && (
                     <MatchingCarers travelPlan={travel} />
                   )}
-
-                {travel?.paymentStatus === "PENDING" && (
-                  <button
-                    type="button"
-                    onClick={() => {
-                      pay(travel);
-                    }}
-                    className="p-2 rounded bg-black text-white hover:bg-white hover:text-black border border-black cursor-pointer"
-                  >
-                    Payment
-                  </button>
-                )}
               </div>
             </div>
           );

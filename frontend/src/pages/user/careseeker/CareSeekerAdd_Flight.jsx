@@ -9,7 +9,6 @@ import validation from "../../../utils/validation";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
 import { createTravelPlan } from "../../../redux/features/travelPlanSlice";
-import SearchCityInput from "../../../components/@comp/SearchCityInput";
 
 const initialForm = {
   origin: "",
@@ -45,7 +44,7 @@ export default function CareSeekerAdd_Flight() {
   const onOpen = () => setOpen((p) => !p);
   const onSave = () => setSave((p) => !p);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
 
     const data = { ...form, ...prefrence };
@@ -57,24 +56,22 @@ export default function CareSeekerAdd_Flight() {
       return;
     }
 
-    toast.promise(
-      dispatch(createTravelPlan(data)).unwrap(),
-      {
-        loading: "Loading...",
-        success: () => {
-          setForm(initialForm);
-          setPrefrence(initialPreference);
-          setFormError({});
-          setSave(false);
-          setOpen(false);
-          return "Booking Successful";
+    try {
+      const result = await toast.promise(
+        dispatch(createTravelPlan(data)).unwrap(),
+        {
+          loading: "Redirecting to payment...",
+          success: "Opening Stripe...",
+          error: (err) => err || "Something went wrong",
         },
-        error: (err) => err,
-      },
-      {
-        position: "top-center",
-      },
-    );
+        { position: "top-center" },
+      );
+
+      // ✅ NEW STRIPE WAY
+      window.location.href = result.url;
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

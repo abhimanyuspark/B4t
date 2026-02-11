@@ -16,3 +16,6 @@ export const Profile = lazy(() => import("./common/Profile"));
 export const Notification = lazy(
   () => import("./user/notification/Notification"),
 );
+
+export const PaymentSuccess = lazy(() => import("./payment/PaymentSuccess"));
+export const PaymentCancel = lazy(() => import("./payment/PaymentCancel"));

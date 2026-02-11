@@ -7,6 +7,8 @@ import {
   Login,
   NotFound,
   Notification,
+  PaymentCancel,
+  PaymentSuccess,
   Profile,
   Register,
   Support,
@@ -51,6 +53,8 @@ function App() {
               <Route path="/bookings" element={<Bookings />} />
               <Route path="/support" element={<Support />} />
               <Route path="/notification" element={<Notification />} />
+              <Route path="/payment-success/:id" element={<PaymentSuccess />} />
+              <Route path="/payment-cancel" element={<PaymentCancel />} />
             </Route>
 
             <Route element={<ProtectedRoute allowedRoles={["admin"]} />}>

@@ -1,17 +1,21 @@
-import {
-  FaPlane,
-  FaSuitcaseRolling,
-  FaComments,
-  FaPlusCircle,
-} from "react-icons/fa";
+import { FaPlane, FaSuitcaseRolling, FaComments } from "react-icons/fa";
 import { Link } from "react-router";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useTranslation } from "react-i18next";
 import Container from "../../components/common/Container";
+import { formatDistanceToNow } from "date-fns";
+import { useEffect } from "react";
+import { getMyBookings } from "../../redux/features/bookingSlice";
 
 export default function DashboardHome() {
   const { user } = useSelector((state) => state.auth);
+  const { list, loading } = useSelector((state) => state.bookings);
   const { t } = useTranslation();
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    dispatch(getMyBookings());
+  }, [dispatch]);
 
   return (
     <Container className="bg-gray-50!">
@@ -32,7 +36,7 @@ export default function DashboardHome() {
         <StatCard
           icon={<FaPlane />}
           title={t("dashboard.stats.bookings")}
-          value="6"
+          value={list?.length || 0}
           color="green"
         />
         <StatCard
@@ -75,18 +79,22 @@ export default function DashboardHome() {
         </h2>
 
         <ul className="space-y-4">
-          <li className="flex justify-between text-gray-700">
-            <span>
-              ✈️ {t("dashboard.recent_activity.flight_booked")}: Delhi → Mumbai
-            </span>
-            <span className="text-sm text-gray-500">2 days ago</span>
-          </li>
-          <li className="flex justify-between text-gray-700">
-            <span>
-              🧳 {t("dashboard.recent_activity.trip_created")}: Goa Beach Trip
-            </span>
-            <span className="text-sm text-gray-500">5 days ago</span>
-          </li>
+          {loading && <p>Loading...</p>}
+          {!loading &&
+            list.slice(0, 2).map((l, index) => (
+              <li key={index} className="flex items-center justify-between">
+                <span>
+                  ✈️ {t("dashboard.recent_activity.flight_booked")}:{" "}
+                  {l?.travelPlanId?.origin} → {l?.travelPlanId?.destination}
+                </span>
+                <span className="text-sm text-gray-500">
+                  {l?.travelPlanId?.travelDate &&
+                    formatDistanceToNow(new Date(l.travelPlanId.travelDate), {
+                      addSuffix: true,
+                    })}
+                </span>
+              </li>
+            ))}
         </ul>
       </div>
     </Container>

@@ -35,6 +35,9 @@ const travelPlanSchema = new mongoose.Schema(
       required: true,
     },
 
+    stripeSessionId: String,
+    stripePaymentIntentId: String,
+
     paymentStatus: {
       type: String,
       enum: ["PENDING", "PAID", "REFUNDED"],

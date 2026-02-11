@@ -12,12 +12,19 @@ import connectDB from "./config/mongoDB.js";
 import dotenv from "dotenv";
 
 import { app, server } from "./config/socket.js";
+// import { stripeWebhook } from "./controllers/stripeWebhook.controller.js";
 
 dotenv.config({ quiet: true });
 
 // const app = express();
 
 app.use(cors(corsOptions));
+// app.post(
+//   "/api/webhooks/stripe",
+//   express.raw({ type: "application/json" }),
+//   stripeWebhook,
+// );
+
 app.use(express.urlencoded({ extended: true, limit: "50mb" }));
 app.use(express.json({ limit: "50mb" }));
 app.use(cookieParser());

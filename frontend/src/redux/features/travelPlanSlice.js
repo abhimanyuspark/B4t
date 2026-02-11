@@ -11,20 +11,7 @@ export const createTravelPlan = createAsyncThunk(
       const res = await api.post("/travel-plans", data);
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
-    }
-  },
-);
-
-// Mark plan as paid
-export const payTravelPlan = createAsyncThunk(
-  "travelPlan/pay",
-  async (planId, { rejectWithValue }) => {
-    try {
-      const res = await api.patch(`/travel-plans/${planId}/pay`);
-      return res.data;
-    } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
@@ -37,7 +24,7 @@ export const getMyTravelPlans = createAsyncThunk(
       const res = await api.get("/travel-plans/my");
       return res.data;
     } catch (err) {
-      return rejectWithValue(err.response.data);
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
@@ -83,14 +70,6 @@ const travelPlanSlice = createSlice({
       .addCase(createTravelPlan.rejected, (state, action) => {
         state.loading = false;
         state.error = action.payload?.message;
-      })
-
-      .addCase(payTravelPlan.fulfilled, (state, action) => {
-        const item = state.list.find((l) => l._id === action.payload._id);
-
-        if (item) {
-          item.paymentStatus = action.payload.paymentStatus;
-        }
       })
 
       .addCase(getMyTravelPlans.pending, (state, action) => {
