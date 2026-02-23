@@ -119,10 +119,10 @@ function CarerCard({ carer, onSelect }) {
         {/* HEADER */}
         <div className="flex items-center justify-between">
           <div>
-            <h3 className="font-semibold text-gray-800">
+            <h3 className="font-semibold text-gray-800 text-clip whitespace-nowrap overflow-hidden">
               {carer?.carerId?.name}
             </h3>
-            <p className="text-xs text-gray-500">{carer?.carerId?.email}</p>
+            <p className="text-xs text-gray-500 text-clip whitespace-nowrap overflow-hidden">{carer?.carerId?.email}</p>
           </div>
 
           <span

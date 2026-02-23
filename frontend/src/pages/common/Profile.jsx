@@ -1,7 +1,7 @@
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import Hr from "../../components/common/Hr";
 import Tag from "../../components/common/Tag";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import Container from "../../components/common/Container";
 import ProfilePicUpload from "../../components/@comp/ProfilePicUpload";
 import {
@@ -49,9 +49,13 @@ export default function Profile() {
           <FaMapMarkerAlt className="text-xl text-blue-500 mt-1" />
           <div>
             <h3 className="font-semibold">Location</h3>
-            <p className="text-gray-600">
-              {user.location.city}, {user.location.country}
-            </p>
+            {user.location ? (
+              <p className="text-gray-600">
+                {user?.location?.city}, {user?.location?.country}
+              </p>
+            ) : (
+              <p className="text-gray-600">User have no location</p>
+            )}
           </div>
         </div>
 

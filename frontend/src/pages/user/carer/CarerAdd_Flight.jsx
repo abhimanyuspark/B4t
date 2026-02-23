@@ -82,6 +82,7 @@ const CarerAdd_Flight = () => {
       <Input
         error={formError?.availableDate}
         type="date"
+        min={new Date().toISOString().split("T")[0]}
         value={form.availableDate}
         label="Date"
         name="availableDate"

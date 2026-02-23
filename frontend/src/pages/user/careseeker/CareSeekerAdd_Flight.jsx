@@ -99,6 +99,7 @@ export default function CareSeekerAdd_Flight() {
       <Input
         error={formError?.travelDate}
         type="date"
+        min={new Date().toISOString().split("T")[0]}
         value={form.travelDate}
         label="Date"
         name="travelDate"
