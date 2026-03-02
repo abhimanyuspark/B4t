@@ -13,6 +13,8 @@ export const Support = lazy(() => import("./user/Support"));
 export const NotFound = lazy(() => import("./common/NotFound"));
 export const UnAuthorized = lazy(() => import("./common/UnAuthorized"));
 export const Profile = lazy(() => import("./common/Profile"));
+export const Settings = lazy(() => import("./user/Settings/Settings"));
+
 export const Notification = lazy(
   () => import("./user/notification/Notification"),
 );

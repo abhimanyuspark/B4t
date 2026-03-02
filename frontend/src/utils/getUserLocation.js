@@ -42,7 +42,7 @@ export const getUserLocation = () =>
         }
       },
       () => {
-        // 🚨 Permission denied → DO NOT reject
+        // Permission denied → DO NOT reject
         resolve(null);
       },
       { enableHighAccuracy: true },

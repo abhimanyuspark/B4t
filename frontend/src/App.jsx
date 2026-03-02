@@ -11,6 +11,7 @@ import {
   PaymentSuccess,
   Profile,
   Register,
+  Settings,
   Support,
   UnAuthorized,
 } from "./pages";
@@ -53,6 +54,8 @@ function App() {
               <Route path="/bookings" element={<Bookings />} />
               <Route path="/support" element={<Support />} />
               <Route path="/notification" element={<Notification />} />
+              <Route path="/settings" element={<Settings />} />
+              
               <Route path="/payment-success/:id" element={<PaymentSuccess />} />
               <Route path="/payment-cancel" element={<PaymentCancel />} />
             </Route>
