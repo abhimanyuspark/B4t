@@ -2,6 +2,7 @@ import express from "express";
 import {
   createBooking,
   acceptBooking,
+  rejectBooking,
   completeBooking,
   getMyBookings,
 } from "../controllers/booking.controller.js";
@@ -12,6 +13,7 @@ const router = express.Router();
 
 router.post("/", protectedRoute, requireCareseeker, createBooking);
 router.patch("/:id/accept", protectedRoute, requireCarer, acceptBooking);
+router.patch("/:id/reject", protectedRoute, requireCarer, rejectBooking);
 router.patch("/:id/complete", protectedRoute, completeBooking);
 router.get("/my", protectedRoute, getMyBookings);
 

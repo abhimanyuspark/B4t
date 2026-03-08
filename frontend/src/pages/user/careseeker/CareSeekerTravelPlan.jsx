@@ -12,6 +12,7 @@ import PageLoader from "../../../components/common/PageLoader";
 import { formateDate } from "../../../utils/support";
 import {
   getMyTravelPlans,
+  payTravelPlan,
   setTravelPlanStatus,
 } from "../../../redux/features/travelPlanSlice";
 import MatchingCarers from "./MatchingCarers";
@@ -42,6 +43,24 @@ const CareSeekerTravelPlan = () => {
   const { list, loading } = useSelector((state) => state.travelPlan);
   const dispatch = useDispatch();
   const socket = useSocket();
+
+  const pay = async (travelPlanId) => {
+    try {
+      const result = await toast.promise(
+        dispatch(payTravelPlan({ travelPlanId: travelPlanId })).unwrap(),
+        {
+          loading: "Redirecting to payment...",
+          success: "Opening Stripe...",
+          error: (err) => err || "Something went wrong",
+        },
+        { position: "top-center" },
+      );
+
+      window.location.href = result.url;
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     dispatch(getMyTravelPlans());
@@ -105,6 +124,19 @@ const CareSeekerTravelPlan = () => {
                   {ui.icon}
                   {travel?.status}
                 </span>
+
+                {travel?.paymentStatus === "PENDING" && (
+                  <div>
+                    <button
+                      onClick={() => {
+                        pay(travel?._id);
+                      }}
+                      className="px-3 py-1 rounded-2xl bg-orange-300 hover:bg-amber-400 cursor-pointer"
+                    >
+                      Payment
+                    </button>
+                  </div>
+                )}
 
                 {travel?.paymentStatus !== "PENDING" &&
                   travel.isCarerSelected === false && (

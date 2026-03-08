@@ -84,6 +84,49 @@ export const completeBooking = async (req, res) => {
   res.json({ success: true });
 };
 
+export const rejectBooking = async (req, res) => {
+  const booking = await Booking.findById(req.params.id);
+  if (!booking) return res.status(404).json({ message: "Not found" });
+
+  if (!booking.carerId.equals(req.user._id))
+    return res.status(403).json({ message: "Unauthorized" });
+
+  if (booking.status !== "PENDING_CARER_ACCEPTANCE")
+    return res.status(400).json({ message: "Cannot reject booking in current status" });
+
+  booking.status = "REJECTED";
+  await booking.save();
+
+  const availability = await CarerAvailability.findById(booking.carerAvailabilityId);
+  if (availability) {
+    availability.status = "ACTIVE";
+    await availability.save();
+
+    io.emit("updateAvailabilityStatus", {
+      id: availability._id,
+      status: "ACTIVE",
+    });
+  }
+
+  await TravelPlan.findByIdAndUpdate(booking.travelPlanId, {
+    status: "OPEN",
+    isCarerSelected: false,
+  });
+  
+  io.emit("updateTravelPlanStatus", {
+    id: booking.travelPlanId,
+    status: "OPEN",
+    isCarerSelected: false,
+  });
+
+  io.emit("updateBookingStatus", {
+    id: booking._id,
+    status: "REJECTED",
+  });
+
+  res.json(booking);
+};
+
 export const getMyBookings = async (req, res) => {
   const query =
     req.user.activeMode === "careSeeker"

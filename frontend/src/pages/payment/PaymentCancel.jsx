@@ -8,7 +8,7 @@ const PaymentCancel = () => {
 
   return (
     <div className="flex items-center justify-center">
-      <h1 className="text-2xl font-bold text-red-600">Payment Cancelled</h1>
+      <h1 className="text-2xl mt-20 font-bold text-red-600 p-8 border border-gray-300 rounded bg-white">Payment Cancelled</h1>
     </div>
   );
 };

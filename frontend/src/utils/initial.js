@@ -85,3 +85,9 @@ export const sidebarNavigation = [
     icon: FcSupport,
   },
 ];
+
+export const genderPrefrence = [
+  { name: "Male", value: "male" },
+  { name: "Female", value: "female" },
+  { name: "Other", value: "other" },
+];

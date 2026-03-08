@@ -16,6 +16,19 @@ export const createTravelPlan = createAsyncThunk(
   },
 );
 
+// payment to travel plan
+export const payTravelPlan = createAsyncThunk(
+  "travelPlan/payment",
+  async (data, { rejectWithValue }) => {
+    try {
+      const res = await api.post("/travel-plans/payment", data);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  },
+);
+
 // My travel plans
 export const getMyTravelPlans = createAsyncThunk(
   "travelPlan/my",

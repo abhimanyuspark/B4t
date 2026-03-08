@@ -29,6 +29,19 @@ export const acceptBooking = createAsyncThunk(
   },
 );
 
+// Carer rejects booking
+export const rejectBooking = createAsyncThunk(
+  "booking/reject",
+  async (bookingId, { rejectWithValue }) => {
+    try {
+      const res = await api.patch(`/bookings/${bookingId}/reject`);
+      return res.data;
+    } catch (err) {
+      return rejectWithValue(err.response?.data?.message || err.message);
+    }
+  },
+);
+
 // Complete booking
 export const completeBooking = createAsyncThunk(
   "booking/complete",
@@ -91,6 +104,13 @@ const bookingSlice = createSlice({
       })
 
       .addCase(acceptBooking.fulfilled, (state, action) => {
+        const item = state.list.find((l) => l._id === action.payload._id);
+
+        if (item) {
+          item.status = action.payload.status;
+        }
+      })
+      .addCase(rejectBooking.fulfilled, (state, action) => {
         const item = state.list.find((l) => l._id === action.payload._id);
 
         if (item) {

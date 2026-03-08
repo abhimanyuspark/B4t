@@ -54,7 +54,7 @@ const MultiSelect = ({
       </div>
 
       {open && (
-        <ul className="absolute z-10 bottom-13 w-full bg-white border border-gray-300 rounded-md shadow max-h-60 overflow-auto">
+        <ul className="absolute z-10 bottom-13 w-full py-2 bg-white border border-gray-300 rounded-md shadow max-h-60 overflow-auto">
           {options.map((opt, index) => {
             const o = text(opt);
             const selected = value.some((v) => text(v) === o);

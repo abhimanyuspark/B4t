@@ -54,6 +54,57 @@ export const createTravelPlan = async (req, res) => {
 };
 
 /* ===============================
+  PAYMENT When canceled
+================================= */
+export const payment = async (req, res) => {
+  try {
+    const { travelPlanId } = req.body;
+
+    if (!travelPlanId) {
+      return res.status(400).json({ message: "TravelPlan ID required" });
+    }
+
+    const plan = await TravelPlan.findById(travelPlanId);
+
+    if (!plan) {
+      return res.status(404).json({ message: "Travel plan not found" });
+    }
+
+    const session = await stripe.checkout.sessions.create({
+      mode: "payment",
+      payment_method_types: ["card"],
+      line_items: [
+        {
+          price_data: {
+            currency: "inr",
+            product_data: {
+              name: "Travel With Buddy Service",
+            },
+            unit_amount: PLATFORM_PRICE * 100, // Stripe uses paise
+          },
+          quantity: 1,
+        },
+      ],
+      success_url: `${process.env.FRONTEND_URL}/payment-success/{CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.FRONTEND_URL}/payment-cancel`,
+      metadata: {
+        travelPlanId: plan._id.toString(),
+      },
+    });
+
+    plan.stripeSessionId = session.id;
+    await plan.save();
+
+    res.status(201).json({
+      success: true,
+      url: session.url,
+    });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+
+/* ===============================
    2️⃣ VERIFY PAYMENT (NO WEBHOOK)
 ================================= */
 export const verifyTravelPlanPayment = async (req, res) => {

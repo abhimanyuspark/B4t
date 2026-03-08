@@ -8,12 +8,14 @@ import {
   FaPlaneArrival,
   FaComments,
   FaCheckCircle,
+  FaTimes,
 } from "react-icons/fa";
 import { IoAirplane } from "react-icons/io5";
 import { formateDate } from "../../../utils/support";
 import {
   getMyBookings,
   acceptBooking,
+  rejectBooking,
 } from "../../../redux/features/bookingSlice";
 import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
@@ -35,6 +37,14 @@ const CarerBookings = () => {
     toast.promise(dispatch(acceptBooking(id)).unwrap(), {
       loading: "Accepting booking...",
       success: "Booking accepted successfully",
+      error: (err) => err,
+    });
+  };
+
+  const onReject = (id) => {
+    toast.promise(dispatch(rejectBooking(id)).unwrap(), {
+      loading: "Rejecting booking...",
+      success: "Booking rejected successfully",
       error: (err) => err,
     });
   };
@@ -113,11 +123,15 @@ const CarerBookings = () => {
               {/* Status */}
               <span
                 className={`px-4 py-1 rounded-full text-sm font-semibold ${
-                  booking?.status === "OPEN"
+                  booking?.status === "PENDING_CARER_ACCEPTANCE"
                     ? "bg-yellow-100 text-yellow-700"
                     : booking?.status === "CONFIRMED"
-                      ? "bg-green-100 text-green-700"
-                      : "bg-gray-100 text-gray-600"
+                    ? "bg-green-100 text-green-700"
+                    : booking?.status === "REJECTED"
+                    ? "bg-red-100 text-red-700"
+                    : booking?.status === "COMPLETED"
+                    ? "bg-blue-100 text-blue-700"
+                    : "bg-gray-100 text-gray-600"
                 }`}
               >
                 {booking?.status}
@@ -125,14 +139,23 @@ const CarerBookings = () => {
 
               {/* Action Buttons */}
               <div className="flex gap-3">
-                {booking?.status !== "CONFIRMED" && (
-                  <button
-                    onClick={() => onAccept(booking?._id)}
-                    className="px-4 py-1 rounded-full flex gap-2 items-center text-green-700 bg-green-100 font-semibold cursor-pointer"
-                  >
-                    <FaCheckCircle />
-                    Accept
-                  </button>
+                {booking?.status === "PENDING_CARER_ACCEPTANCE" && (
+                  <>
+                    <button
+                      onClick={() => onAccept(booking?._id)}
+                      className="px-4 py-1 rounded-full flex gap-2 items-center text-green-700 bg-green-100 font-semibold cursor-pointer"
+                    >
+                      <FaCheckCircle />
+                      Accept
+                    </button>
+                    <button
+                      onClick={() => onReject(booking?._id)}
+                      className="px-4 py-1 rounded-full flex gap-2 items-center text-red-700 bg-red-100 font-semibold cursor-pointer"
+                    >
+                      <FaTimes />
+                      Reject
+                    </button>
+                  </>
                 )}
 
                 <button

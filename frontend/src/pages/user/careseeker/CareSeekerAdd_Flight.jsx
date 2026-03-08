@@ -4,7 +4,7 @@ import Input from "../../../components/common/Input";
 import { useTranslation } from "react-i18next";
 import { useState } from "react";
 import MultiSelect from "../../../components/common/MultiSelect";
-import { languages } from "../../../utils/initial";
+import { languages, genderPrefrence } from "../../../utils/initial";
 import validation from "../../../utils/validation";
 import { toast } from "react-hot-toast";
 import { useDispatch, useSelector } from "react-redux";
@@ -178,38 +178,25 @@ const Prefrences = ({
         <div className="p-2 grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div className="flex gap-2 flex-col text-gray-700">
             <span className="text-base font-medium">Gender</span>
-            <div className="flex items-center justify-evenly gap-8 w-full">
-              <label
-                htmlFor="male"
-                className="font-medium flex justify-between w-full cursor-pointer hover:bg-gray-100 p-2 rounded"
-              >
-                <span>Male</span>
-                <input
-                  id="male"
-                  value="male"
-                  name="gender"
-                  className="w-5"
-                  checked={prefrence.gender === "male"}
-                  type="radio"
-                  onChange={onGender}
-                />
-              </label>
-
-              <label
-                htmlFor="female"
-                className="font-medium flex justify-between w-full cursor-pointer hover:bg-gray-100 p-2 rounded"
-              >
-                <span>Female</span>
-                <input
-                  id="female"
-                  value="female"
-                  className="w-5"
-                  checked={prefrence.gender === "female"}
-                  name="gender"
-                  type="radio"
-                  onChange={onGender}
-                />
-              </label>
+            <div className="grid gap-4 grid-cols-1 sm:grid-cols-2 w-full">
+              {genderPrefrence.map((g, i) => (
+                <label
+                  key={i}
+                  htmlFor={g.value}
+                  className="font-medium flex justify-between w-full cursor-pointer hover:bg-gray-100 p-2 rounded"
+                >
+                  <span>{g.name}</span>
+                  <input
+                    id={g.value}
+                    value={g.value}
+                    name="gender"
+                    className="w-5"
+                    checked={prefrence.gender === g.value}
+                    type="radio"
+                    onChange={onGender}
+                  />
+                </label>
+              ))}
             </div>
 
             {error.gender && (
