@@ -21,6 +21,13 @@ import { toast } from "react-hot-toast";
 import { useNavigate } from "react-router";
 import Avatar from "../../../components/@comp/Avatar";
 
+const statusStyles = {
+  PENDING_CARER_ACCEPTANCE: "bg-yellow-100 text-yellow-700",
+  CONFIRMED: "bg-green-100 text-green-700",
+  REJECTED: "bg-red-100 text-red-700",
+  COMPLETED: "bg-blue-100 text-blue-700",
+};
+
 const CarerBookings = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -123,15 +130,7 @@ const CarerBookings = () => {
               {/* Status */}
               <span
                 className={`px-4 py-1 rounded-full text-sm font-semibold ${
-                  booking?.status === "PENDING_CARER_ACCEPTANCE"
-                    ? "bg-yellow-100 text-yellow-700"
-                    : booking?.status === "CONFIRMED"
-                    ? "bg-green-100 text-green-700"
-                    : booking?.status === "REJECTED"
-                    ? "bg-red-100 text-red-700"
-                    : booking?.status === "COMPLETED"
-                    ? "bg-blue-100 text-blue-700"
-                    : "bg-gray-100 text-gray-600"
+                  statusStyles[booking?.status] || "bg-gray-100 text-gray-600"
                 }`}
               >
                 {booking?.status}

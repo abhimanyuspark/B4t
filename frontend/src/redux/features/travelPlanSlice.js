@@ -68,6 +68,7 @@ const travelPlanSlice = createSlice({
 
       if (item) {
         item.status = action.payload.status;
+        item.isCarerSelected = action.payload.isCarerSelected;
       }
     },
   },

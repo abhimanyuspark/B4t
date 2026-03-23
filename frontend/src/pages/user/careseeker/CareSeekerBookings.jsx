@@ -19,6 +19,13 @@ import { toast } from "react-hot-toast";
 import Avatar from "../../../components/@comp/Avatar";
 import { useNavigate } from "react-router";
 
+const statusStyles = {
+  PENDING_CARER_ACCEPTANCE: "bg-yellow-100 text-yellow-700",
+  CONFIRMED: "bg-green-100 text-green-700",
+  REJECTED: "bg-red-100 text-red-700",
+  COMPLETED: "bg-blue-100 text-blue-700",
+};
+
 const CareSeekerBookings = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -118,10 +125,8 @@ const CareSeekerBookings = () => {
             <div className="flex items-center justify-between gap-4">
               {/* Status */}
               <span
-                className={`inline-flex items-center gap-1 px-3 py-1 rounded-full text-sm font-medium ${
-                  booking?.status === "OPEN"
-                    ? "bg-gray-100 text-gray-600"
-                    : "bg-green-100 text-green-600"
+                className={`px-4 py-1 rounded-full text-sm font-semibold ${
+                  statusStyles[booking?.status] || "bg-gray-100 text-gray-600"
                 }`}
               >
                 {booking?.status}

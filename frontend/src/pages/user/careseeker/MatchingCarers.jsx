@@ -71,7 +71,7 @@ export default function MatchingCarers({ travelPlan }) {
         {/* DRAWER */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className="h-full overflow-auto w-80 bg-white shadow-2xl border border-gray-300 flex flex-col gap-2 p-2"
+          className="h-full overflow-auto w-100 bg-white shadow-2xl border border-gray-300 flex flex-col gap-2 p-2"
         >
           <h1 className="text-2xl font-semibold">Available Carers</h1>
 

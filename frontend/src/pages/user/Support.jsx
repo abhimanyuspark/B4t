@@ -7,9 +7,31 @@ import {
 import Container from "../../components/common/Container";
 import Button from "../../components/common/Button";
 import { useTranslation } from "react-i18next";
+import Input from "../../components/common/Input";
+import Select from "../../components/common/Select";
+import { useState } from "react";
+
+const options = [
+  { name: "Booking Issue", value: "Booking Issue" },
+  { name: "Payment Problem", value: "Payment Problem" },
+  { name: "Account Issue", value: "Account Issue" },
+  { name: "Other", value: "Other" },
+];
 
 export default function Support() {
   const { t } = useTranslation();
+  const [form, setForm] = useState({
+    name: "",
+    email: "",
+    message: "",
+    issue: options[0],
+  });
+
+  const onSubmit = (e) => {
+    e.preventDefault();
+    
+    console.table(form);
+  };
 
   return (
     <Container className="bg-gray-50!">
@@ -28,27 +50,41 @@ export default function Support() {
               {t("support.contact_title")}
             </h2>
 
-            <form className="space-y-4">
-              <input
+            <form className="space-y-4" onSubmit={onSubmit}>
+              <Input
+                value={form.name}
                 type="text"
                 placeholder="Your Name"
-                className="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={(e) => {
+                  setForm((p) => ({ ...p, name: e.target.value }));
+                }}
               />
-              <input
+              <Input
+                value={form.email}
                 type="email"
                 placeholder="Your Email"
-                className="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                onChange={(e) => {
+                  setForm((p) => ({ ...p, email: e.target.value }));
+                }}
               />
-              <select className="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <option>Booking Issue</option>
-                <option>Payment Problem</option>
-                <option>Account Issue</option>
-                <option>Other</option>
-              </select>
+              <Select
+                options={options}
+                onChange={(e) => {
+                  setForm((p) => ({ ...p, issue: e }));
+                }}
+                className="w-full"
+                value={form.issue}
+                text={(e) => e.value}
+              />
+
               <textarea
                 rows="4"
+                value={form.message}
+                onChange={(e) => {
+                  setForm((p) => ({ ...p, message: e.target.value }));
+                }}
                 placeholder="Describe your issue..."
-                className="w-full border rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full border rounded-lg px-4 py-2 border-gray-300 focus:outline-none focus:ring-2 focus:ring-green-500"
               />
 
               <Button

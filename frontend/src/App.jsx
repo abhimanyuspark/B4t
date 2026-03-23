@@ -3,6 +3,7 @@ import {
   Add_Flight,
   AdminDashboard,
   Bookings,
+  Chat,
   DashBoard,
   Login,
   NotFound,
@@ -55,6 +56,7 @@ function App() {
               <Route path="/support" element={<Support />} />
               <Route path="/notification" element={<Notification />} />
               <Route path="/settings" element={<Settings />} />
+              <Route path="/chat/:id" element={<Chat />} />
               
               <Route path="/payment-success/:id" element={<PaymentSuccess />} />
               <Route path="/payment-cancel" element={<PaymentCancel />} />
