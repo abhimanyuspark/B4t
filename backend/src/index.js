@@ -13,6 +13,7 @@ import dotenv from "dotenv";
 
 import { app, server } from "./config/socket.js";
 import path from "path";
+import { fileURLToPath } from "url";
 
 // import { stripeWebhook } from "./controllers/stripeWebhook.controller.js";
 
@@ -36,15 +37,16 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/travel-plans", travelPlanRoutes);
 app.use("/api/carer-availabilities", carerAvailabilityRoutes);
 
-const __dirname = path.resolve();
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 // Serve frontend
-app.use(express.static(path.join(__dirname, "../frontend/dist")));
+app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
 app.use((req, res) => {
   res
     .status(200)
-    .sendFile(path.join(__dirname, "../frontend", "dist", "index.html"));
+    .sendFile(path.join(__dirname, "../../frontend", "dist", "index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
