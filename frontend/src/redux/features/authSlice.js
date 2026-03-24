@@ -12,9 +12,14 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post("/auth/register", userData);
-      return response?.data;
+      return response.data;
     } catch (err) {
-      return rejectWithValue(err.response?.data?.message || err.message);
+      return rejectWithValue(
+        err?.response?.data?.message ||
+          err?.response?.data ||
+          err.message ||
+          "Something went wrong",
+      );
     }
   },
 );
@@ -25,9 +30,14 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post(`/auth/login`, userData);
-      return response?.data;
+      return response.data;
     } catch (err) {
-      return rejectWithValue(err.response?.data || err.response?.data?.message || err.message);
+      return rejectWithValue(
+        err?.response?.data?.message ||
+          err?.response?.data ||
+          err.message ||
+          "Something went wrong",
+      );
     }
   },
 );

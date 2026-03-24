@@ -40,7 +40,7 @@ const Register = () => {
           navigate("/", { replace: true });
           return "Registration successful";
         },
-        error: (err) => err,
+        error: (err) => err?.message || err || "Login failed",
       },
       {
         position: "top-center",

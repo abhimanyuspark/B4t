@@ -39,7 +39,7 @@ const Login = () => {
           navigate("/", { replace: true });
           return "Login successful";
         },
-        error: (err) => err,
+        error: (err) => err?.message || err || "Login failed",
       },
       {
         position: "top-center",
