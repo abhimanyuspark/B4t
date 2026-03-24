@@ -27,12 +27,8 @@ export const loginUser = createAsyncThunk(
       const response = await api.post(`/auth/login`, userData);
       return response.data;
     } catch (err) {
-      const message =
-        err?.response?.data?.message ||
-        err?.response?.data ||
-        err?.message ||
-        "Login failed. Please try again.";
-      return rejectWithValue(message);
+      console.log(err)
+      return rejectWithValue(err.response?.data?.message || err.message);
     }
   },
 );
