@@ -12,6 +12,8 @@ import connectDB from "./config/mongoDB.js";
 import dotenv from "dotenv";
 
 import { app, server } from "./config/socket.js";
+import path from "path";
+
 // import { stripeWebhook } from "./controllers/stripeWebhook.controller.js";
 
 dotenv.config({ quiet: true });
@@ -34,11 +36,13 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/travel-plans", travelPlanRoutes);
 app.use("/api/carer-availabilities", carerAvailabilityRoutes);
 
-// serve frontend
-app.use(express.static(path.join(__dirname, "/dist")));
+const __dirname = path.resolve();
+
+// Serve frontend
+app.use(express.static(path.join(__dirname, "../frontend/dist")));
 
 app.get("*", (req, res) => {
-  res.sendFile(path.join(__dirname, "dist", "index.html"));
+  res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
 });
 
 const PORT = process.env.PORT || 5000;
