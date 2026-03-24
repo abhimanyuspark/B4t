@@ -12,9 +12,9 @@ const validation = (form) => {
   if ("password" in form) {
     if (!form.password) {
       errs.password = "Password is required";
-    } else if (form.password.length < 6 || form.password.length > 10) {
+    } else if (form.password.length < 20 || form.password.length > 30) {
       errs.password =
-        "Password must be at least 6 characters and at most 10 characters";
+        "Password must be at least 20 characters and at most 30 characters";
     }
   }
 
