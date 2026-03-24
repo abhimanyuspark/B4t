@@ -25,10 +25,12 @@ export const googleAuth = async (req, res, next) => {
     let user = await User.findOne({ email });
 
     if (!user) {
+      const hashPwd = await bcrypt.hash(name, 10);
       const userData = {
         name,
         email,
         provider: "google",
+        password: hashPwd,
         oauthId: sub,
         isVerified: true,
         profilePicture: picture,
