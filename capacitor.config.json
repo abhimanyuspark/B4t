@@ -1,0 +1,9 @@
+{
+  "appId": "com.b4t.app",
+  "appName": "B4T App",
+  "webDir": "www",
+  "server": {
+    "url": "https://b4t.onrender.com",
+    "cleartext": true
+  }
+}
