@@ -32,6 +32,7 @@ export const loginUser = createAsyncThunk(
       const response = await api.post(`/auth/login`, userData);
       return response.data;
     } catch (err) {
+      console.log(err.response);
       return rejectWithValue(
         err?.response?.data?.message ||
           err?.response?.data ||
