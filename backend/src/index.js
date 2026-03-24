@@ -34,6 +34,13 @@ app.use("/api/bookings", bookingRoutes);
 app.use("/api/travel-plans", travelPlanRoutes);
 app.use("/api/carer-availabilities", carerAvailabilityRoutes);
 
+// serve frontend
+app.use(express.static(path.join(__dirname, "/dist")));
+
+app.get("*", (req, res) => {
+  res.sendFile(path.join(__dirname, "dist", "index.html"));
+});
+
 const PORT = process.env.PORT || 5000;
 
 connectDB().then(() => {
