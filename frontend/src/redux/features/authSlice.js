@@ -12,7 +12,7 @@ export const registerUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post("/auth/register", userData);
-      return response.data;
+      return response?.data;
     } catch (err) {
       return rejectWithValue(err.response?.data?.message || err.message);
     }
@@ -25,10 +25,9 @@ export const loginUser = createAsyncThunk(
   async (userData, { rejectWithValue }) => {
     try {
       const response = await api.post(`/auth/login`, userData);
-      return response.data;
+      return response?.data;
     } catch (err) {
-      console.log(err)
-      return rejectWithValue(err.response?.data?.message || err.message);
+      return rejectWithValue(err.response?.data || err.response?.data?.message || err.message);
     }
   },
 );
@@ -200,15 +199,19 @@ const authSlice = createSlice({
         state.user = action.payload;
         state.isAuthenticated = true;
       })
-      .addCase(refreshAuth.rejected, (state) => {
+      .addCase(refreshAuth.rejected, (state, action) => {
         state.loading = false;
         state.user = null;
         state.isAuthenticated = false;
+        state.error = action.payload;
       })
 
       /* ------------------------------ Update Profile ------------------------------ */
       .addCase(updateProfile.fulfilled, (state, action) => {
         state.user = { ...state.user, ...action.payload };
+      })
+      .addCase(updateProfile.rejected, (state, action) => {
+        state.error = action.payload;
       })
 
       /* ------------------------------ Logout ------------------------------ */
@@ -222,6 +225,10 @@ const authSlice = createSlice({
         state.loading = false;
         state.isAuthenticated = false;
       })
+      .addCase(logout.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
+      })
 
       /* ------------------------------ Get Geo Location ------------------------------ */
       .addCase(getGeoLocation.pending, (state) => {
@@ -231,8 +238,9 @@ const authSlice = createSlice({
         state.geoLoading = false;
         state.location = action.payload;
       })
-      .addCase(getGeoLocation.rejected, (state) => {
+      .addCase(getGeoLocation.rejected, (state, action) => {
         state.geoLoading = false;
+        state.error = action.payload;
       })
 
       /* ------------------------------ Update user Location ------------------------------ */
@@ -244,8 +252,9 @@ const authSlice = createSlice({
         state.user = { ...state.user, ...action.payload };
         state.location = action.payload;
       })
-      .addCase(updateUserLocation.rejected, (state) => {
+      .addCase(updateUserLocation.rejected, (state, action) => {
         state.geoLoading = false;
+        state.error = action.payload;
       })
 
       /* ------------------------------ Switch Mode ------------------------------ */
@@ -256,8 +265,9 @@ const authSlice = createSlice({
         state.loading = false;
         state.user = { ...state.user, ...action.payload };
       })
-      .addCase(switchMode.rejected, (state) => {
+      .addCase(switchMode.rejected, (state, action) => {
         state.loading = false;
+        state.error = action.payload;
       });
   },
 });
