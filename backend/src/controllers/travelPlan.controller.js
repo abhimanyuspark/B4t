@@ -34,8 +34,8 @@ export const createTravelPlan = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.FRONTEND_URL}/payment-success/{CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL}/payment-cancel`,
+      success_url: `${process.env.CORS_ORIGIN}/payment-success/{CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CORS_ORIGIN}/payment-cancel`,
       metadata: {
         travelPlanId: plan._id.toString(),
       },
@@ -85,8 +85,8 @@ export const payment = async (req, res) => {
           quantity: 1,
         },
       ],
-      success_url: `${process.env.FRONTEND_URL}/payment-success/{CHECKOUT_SESSION_ID}`,
-      cancel_url: `${process.env.FRONTEND_URL}/payment-cancel`,
+      success_url: `${process.env.CORS_ORIGIN}/payment-success/{CHECKOUT_SESSION_ID}`,
+      cancel_url: `${process.env.CORS_ORIGIN}/payment-cancel`,
       metadata: {
         travelPlanId: plan._id.toString(),
       },

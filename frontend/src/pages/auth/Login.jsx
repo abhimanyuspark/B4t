@@ -39,7 +39,7 @@ const Login = () => {
           navigate("/", { replace: true });
           return "Login successful";
         },
-        error: (err) => err?.message || err || "Login failed",
+        error: (err) => err,
       },
       {
         position: "top-center",
@@ -57,7 +57,7 @@ const Login = () => {
         <Input
           type="email"
           name="email"
-          label="email"
+          label="Email"
           value={form.email}
           onChange={handleChange}
           error={errors.email}

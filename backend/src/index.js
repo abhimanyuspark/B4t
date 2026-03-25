@@ -41,13 +41,15 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 // Serve frontend
-app.use(express.static(path.join(__dirname, "../../frontend/dist")));
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../../frontend/dist")));
 
-app.use((req, res) => {
-  res
-    .status(200)
-    .sendFile(path.join(__dirname, "../../frontend", "dist", "index.html"));
-});
+  app.use((req, res) => {
+    res
+      .status(200)
+      .sendFile(path.join(__dirname, "../../frontend", "dist", "index.html"));
+  });
+}
 
 const PORT = process.env.PORT || 5000;
 

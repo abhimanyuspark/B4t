@@ -57,7 +57,7 @@ function App() {
               <Route path="/notification" element={<Notification />} />
               <Route path="/settings" element={<Settings />} />
               <Route path="/chat/:id" element={<Chat />} />
-              
+
               <Route path="/payment-success/:id" element={<PaymentSuccess />} />
               <Route path="/payment-cancel" element={<PaymentCancel />} />
             </Route>

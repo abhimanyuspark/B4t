@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import api from "../services/api"; // axios instance with interceptors
+import api from "../services/api";
 import { getUserLocation } from "../../utils/getUserLocation";
 
 /* -------------------------------------------------------------------------- */
@@ -14,12 +14,7 @@ export const registerUser = createAsyncThunk(
       const response = await api.post("/auth/register", userData);
       return response.data;
     } catch (err) {
-      return rejectWithValue(
-        err?.response?.data?.message ||
-          err?.response?.data ||
-          err.message ||
-          "Something went wrong",
-      );
+      return rejectWithValue(err?.response?.data?.message || err?.message);
     }
   },
 );
@@ -32,13 +27,7 @@ export const loginUser = createAsyncThunk(
       const response = await api.post(`/auth/login`, userData);
       return response.data;
     } catch (err) {
-      console.log(err.response);
-      return rejectWithValue(
-        err?.response?.data?.message ||
-          err?.response?.data ||
-          err.message ||
-          "Something went wrong",
-      );
+      return rejectWithValue(err?.response?.data?.message || err?.message);
     }
   },
 );
